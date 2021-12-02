@@ -13,7 +13,9 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public AddPoliceOfficer() {
+    private myDBCon db;
+    public AddPoliceOfficer(myDBCon db) {
+        this.db = db;
         initComponents();
     }
 

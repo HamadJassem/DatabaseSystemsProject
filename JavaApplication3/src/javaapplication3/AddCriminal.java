@@ -13,7 +13,9 @@ public class AddCriminal extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public AddCriminal() {
+    private myDBCon db;
+    public AddCriminal(myDBCon db) {
+        this.db = db;
         initComponents();
     }
 

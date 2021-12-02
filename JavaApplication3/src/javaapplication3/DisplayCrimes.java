@@ -15,7 +15,9 @@ public class DisplayCrimes extends javax.swing.JFrame {
     /**
      * Creates new customizer DisplayCrimes
      */
-    public DisplayCrimes() {
+    private myDBCon db;
+    public DisplayCrimes(myDBCon db) {
+        this.db = db;
         initComponents();
         this.setLocationRelativeTo(null);
     }
