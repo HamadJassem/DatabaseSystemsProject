@@ -8,7 +8,7 @@ package javaapplication3;
  *
  * @author theag
  */
-public class DisplayCrimes extends javax.swing.JPanel implements java.beans.Customizer {
+public class DisplayCrimes extends javax.swing.JFrame {
     
     private Object bean;
 
@@ -17,6 +17,7 @@ public class DisplayCrimes extends javax.swing.JPanel implements java.beans.Cust
      */
     public DisplayCrimes() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void setObject(Object bean) {
