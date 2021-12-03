@@ -26,15 +26,12 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
      * Creates new form NewJFrame1
      */
     private myDBCon db;
-    
-   
-    PreparedStatement prepStatement;
     ResultSet rs;
     ResultSet rsStation;
     public EditPoliceOfficer(myDBCon db) {
         this.db = db;
         initComponents();
-        this.setLocationRelativeTo(null);
+     
 
         
         lblOfficerIDError.setVisible(false);
@@ -43,73 +40,21 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
         lblDateError.setVisible(false);
         lblRankError.setVisible(false);
         
-        try {
-            this.db = new myDBCon("b00083443", "b00083443");
-
-            getNewData();
-        } catch (ClassNotFoundException | SQLException e) {
-            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Connection error.");
-            label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-            JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        
     }
     
-    private void getNewData()
+    
+    
+    
+    void setComboBox() throws SQLException
     {
-        try {
-            rsStation = db.statement.executeQuery("SELECT stationID, address FROM police_station ORDER BY stationID ASC ");
-            StationIDcomboBox.removeAllItems();
-            while (rsStation.next()) {
+        rsStation = db.executeQuery("SELECT distinct stationID FROM police_station ORDER BY stationID ASC");
+        while (rsStation.next()) {
                 StationIDcomboBox.addItem(rsStation.getString("stationID"));
             }
-            
-            rs = db.statement.executeQuery("SELECT officerID, fname, lname, hiredate, rank, stationID FROM officer ORDER BY officerID ASC ");
-            rs.beforeFirst();
-            rs.first();
-            populateFields();
-            
-        } catch (SQLException ex) {
-            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected officerID.");
-            label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-            JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);        
-        }
     }
     
-    
-    //search?
-    private void populateFields() {
-        try {
-            txtOfficerID.setText(rs.getString("officerID"));
-            txtFname.setText(rs.getString("fname"));
-            txtLname.setText(rs.getString("Lname"));
-            txtDate.setText(rs.getString("hiredate"));
-            txtRank.setText(rs.getString("rank"));
-            
-
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(EditPoliceOfficer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    public boolean isDouble(String s) {
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
+  
     void clearErrorLabels() {
         lblOfficerIDError.setText("");
         lblOfficerIDError.setVisible(false);
@@ -128,22 +73,13 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
         boolean result = true;
         clearErrorLabels();
 
-        if (txtOfficerID.getText().trim().isEmpty() || !isInteger(txtOfficerID.getText().trim())) {
-            if (txtOfficerID.getText().trim().isEmpty()) {
-                lblOfficerIDError.setText("Invalid. Cannot be empty.");
-            } else if (!isInteger(txtOfficerID.getText().trim())) {
-                lblOfficerIDError.setText("Invalid. Must be integer.");
-            }
-
-            lblOfficerIDError.setVisible(true);
-            result = false;
-        }
+       
 
         if (txtFname.getText().trim().isEmpty() || (txtFname.getText().trim().length() > 10)) {
             if (txtFname.getText().trim().isEmpty()) {
                 lblFnameError.setText("Invalid. Cannot be empty.");
             } else if ((txtFname.getText().trim().length() > 25)) {
-                lblFnameError.setText("Invalid. Must be < 25 chars.");
+                lblFnameError.setText("Invalid. cannot exceed 25 chars.");
             }
 
             lblFnameError.setVisible(true);
@@ -154,7 +90,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
             if (txtLname.getText().trim().isEmpty()) {
                 lblLnameError.setText("Invalid. Cannot be empty.");
             } else if ((txtLname.getText().trim().length() > 25)) {
-                lblLnameError.setText("Invalid. Must be < 25 chars.");
+                lblLnameError.setText("Invalid. cannot exceed 25 chars.");
             }
 
             lblLnameError.setVisible(true);
@@ -171,7 +107,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
             if (txtRank.getText().trim().isEmpty()) {
                 lblRankError.setText("Invalid. Cannot be empty.");
             } else if ((txtRank.getText().trim().length() > 20)) {
-                lblRankError.setText("Invalid. Must be < 20 chars.");
+                lblRankError.setText("Invalid. cannot exceed 20 chars.");
             }
 
             lblFnameError.setVisible(true);
@@ -227,7 +163,6 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
 
         jScrollPane7.setViewportView(txtRank);
 
-        StationIDcomboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         StationIDcomboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StationIDcomboBoxActionPerformed(evt);
@@ -235,9 +170,9 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        jLabel9.setText("Station ID:");
+        jLabel9.setText("Station#:");
 
-        SearchText.setToolTipText("search criminal by ID"); // NOI18N
+        SearchText.setToolTipText("search offiicer by ID"); // NOI18N
         jScrollPane1.setViewportView(SearchText);
 
         jLabel1.setText("Picture -maybe-");
@@ -278,6 +213,8 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
         hiredateLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         hiredateLabel.setText("HireDate:");
 
+        txtOfficerID.setEditable(false);
+        txtOfficerID.setBackground(new java.awt.Color(240, 240, 240));
         jScrollPane2.setViewportView(txtOfficerID);
 
         EditCriminalInfoLabel.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
@@ -354,7 +291,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LnameLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -391,7 +328,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,6 +385,23 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
+       try {
+            rs = db.executeQuery("SELECT * FROM officer WHERE officerID = " + "'" + SearchText.getText() + "'");
+            if(rs.next())
+            {
+               txtOfficerID.setText(rs.getString("officerID"));
+               txtFname.setText(rs.getString("fname"));
+               txtLname.setText(rs.getString("lname"));
+               txtDate.setText(rs.getString("hiredate"));
+               txtRank.setText(rs.getString("rank"));
+               setComboBox();
+               StationIDcomboBox.setSelectedItem(rs.getString("stationID"));
+               
+               db.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EditCases.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
@@ -456,24 +410,24 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
             
 
             if (isValidData()) {
-                prepStatement = db.con.prepareStatement("UPDATE officer SET fname = ?, lname = ?, hiredate = ?, raml = ?, stationID = ? WHERE officerID = ?");
-                prepStatement.setString(1, txtFname.getText().toUpperCase());
-                prepStatement.setString(2, txtLname.getText().toUpperCase());
-                prepStatement.setString(3, txtDate.getText());
-                prepStatement.setString(4, txtRank.getText().toUpperCase());
-                prepStatement.setInt(5, Integer.parseInt(StationIDcomboBox.getSelectedItem().toString()));
-                prepStatement.setInt(6, Integer.parseInt(txtOfficerID.getText().trim()));
-                int result = prepStatement.executeUpdate();
+               this.db.setupPrepStatement("UPDATE officer SET fname = ?, lname = ?, hiredate = ?, rank = ?, stationID = ? WHERE officerID = ?");
+                this.db.getPrepStatement().setString(1, txtFname.getText().toUpperCase());
+                this.db.getPrepStatement().setString(2, txtLname.getText().toUpperCase());
+                this.db.getPrepStatement().setString(3, txtDate.getText());
+                this.db.getPrepStatement().setString(4, txtRank.getText().toUpperCase());
+                this.db.getPrepStatement().setInt(5, Integer.parseInt(StationIDcomboBox.getSelectedItem().toString()));
+                this.db.getPrepStatement().setInt(6, Integer.parseInt(txtOfficerID.getText().trim()));
+                int result = this.db.executePrepUpdate();
                 if (result > 0) {
 
                     javax.swing.JLabel label = new javax.swing.JLabel("Officer of ID: " + txtOfficerID.getText() + " updated successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
-                    getNewData();
+                  
 
                 } 
-                prepStatement.close();
+            
             } else {
 
                 javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
@@ -493,16 +447,15 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         // TODO add your handling code here:
         try {
-            prepStatement = db.con.prepareStatement("DELETE emp WHERE empno = " + txtOfficerID.getText().trim());
-            int result = prepStatement.executeUpdate();
+           this.db.setupPrepStatement("DELETE emp WHERE empno = " + txtOfficerID.getText().trim());
+            int result = this.db.executePrepUpdate();
             if (result > 0) {
                 javax.swing.JLabel label = new javax.swing.JLabel("Officer of ID: " + txtOfficerID.getText().trim() + " deleted successfully.");
                 label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                 JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                getNewData();
+                
             }
 
-            prepStatement.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error adding new employee.");
