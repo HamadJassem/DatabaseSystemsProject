@@ -58,7 +58,6 @@ public class EditCases extends javax.swing.JFrame {
         CriminalIDCmbBox = new javax.swing.JComboBox<>();
         OfficerIDCmbBox = new javax.swing.JComboBox<>();
         CrimeIDCmbBox = new javax.swing.JComboBox<>();
-        CaseIDError = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         caseIDSearch = new javax.swing.JTextPane();
         SearchButton = new javax.swing.JButton();
@@ -75,6 +74,8 @@ public class EditCases extends javax.swing.JFrame {
         CaseIDLabel3.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         CaseIDLabel3.setText("Crime ID:");
 
+        CaseIDText.setEditable(false);
+        CaseIDText.setBackground(new java.awt.Color(240, 240, 240));
         jScrollPane1.setViewportView(CaseIDText);
 
         CaseIDLabel1.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
@@ -112,10 +113,6 @@ public class EditCases extends javax.swing.JFrame {
             }
         });
 
-        CaseIDError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        CaseIDError.setForeground(new java.awt.Color(255, 0, 0));
-        CaseIDError.setText("ERROR LABEL");
-
         caseIDSearch.setToolTipText("Enter Case ID");
         jScrollPane3.setViewportView(caseIDSearch);
 
@@ -150,13 +147,11 @@ public class EditCases extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(CaseIDLabel)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(CaseIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(CaseIDLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -209,8 +204,7 @@ public class EditCases extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CaseIDLabel)
-                    .addComponent(CaseIDError))
+                    .addComponent(CaseIDLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,36 +240,14 @@ public class EditCases extends javax.swing.JFrame {
     boolean isValidData() throws SQLException
     {
         boolean flag = true;
-        //check for caseID (empty, not integer, greater than 4). Ignore check if the id did not change
-        if(CaseIDText.getText().trim().isEmpty() || !Validation.isInteger(CaseIDText.getText().trim()) || CaseIDText.getText().length()> 4)
-        {
-            if(CaseIDText.getText().trim().isEmpty())
-            {
-                CaseIDError.setText("This field should not be empty");
-            }
-            else if(!Validation.isInteger(CaseIDText.getText().trim()))
-            {
-                CaseIDError.setText("Please enter integer");
-                
-            }
-            else if(CaseIDText.getText().length()> 4)
-            {
-                CaseIDError.setText("The length should be at most 4 digits");
-            }
 
-            CaseIDError.setVisible(true);
-            flag = false;
-        }
-            
         //check that (caseID,criminalID) are not same from the rest of the tuples
         if(prevCaseID == CaseIDText.getText() && prevCriminalID == CriminalIDCmbBox.getSelectedItem())
         {
         rs = db.executeQuery("SELECT caseID, criminalID FROM case WHERE caseID = " + "'" + CaseIDText.getText() + "'" + "AND CriminalID = " + "'" + CriminalIDCmbBox.getSelectedItem() + "'");
         if(rs.next())
         {
-            CaseIDError.setText("The following (Case ID, Criminal ID) already exist");
-            CriminalIDError.setText("The following (Case ID, Criminal ID) already exist");
-            CaseIDError.setVisible(true);
+            CriminalIDError.setText("The set (Case ID, Criminal ID) already exist");
             CriminalIDError.setVisible(true);
             flag = false;
         }
@@ -302,7 +274,6 @@ public class EditCases extends javax.swing.JFrame {
     
     void disableErrorLabels()
     {
-        CaseIDError.setVisible(false);
         DescriptionError.setVisible(false);
         CriminalIDError.setVisible(false);
     }
@@ -356,29 +327,22 @@ public class EditCases extends javax.swing.JFrame {
             if(isValidData())
             {
                 int result;
-                if(prevCaseID == CaseIDText.getText() && prevCriminalID == CriminalIDCmbBox.getSelectedItem())
-                {
-                    result = db.executeUpdate("UPDATE case SET "
-                            + "description = " + "'" + DescriptionText.getText() + "', "
-                            + "crimeID = " + "'" + CrimeIDCmbBox.getSelectedItem() + "', "
-                            + "OfficerID = " + "'" + OfficerIDCmbBox.getSelectedItem() + "', "
-                            + "recorded_date = " + "'" + DateText.getText() + "'"
-                            + "WHERE caseID = " + "'" + prevCaseID + "'"
-                            + "AND criminalID = " + "'" + prevCriminalID + "'");
-                }
-                else
-                {
-                    result = db.executeUpdate("UPDATE case SET "
-                            + "caseID = " + "'" + CaseIDText.getText() + "', " 
-                            + "description = " + "'" + DescriptionText.getText() + "', "
-                            + "criminalID = " + "'" + CriminalIDCmbBox.getSelectedItem() + "', " 
-                            + "crimeID = " + "'" + CrimeIDCmbBox.getSelectedItem() + "', "
-                            + "OfficerID = " + "'" + OfficerIDCmbBox.getSelectedItem() + "', "
-                            + "recorded_date = " + "'" + DateText.getText() + "'"
-                            + "WHERE caseID = " + "'" + prevCaseID + "'"
-                            + "AND criminalID = " + "'" + prevCriminalID + "'");                    
-                }
-             
+
+                    db.setupPrepStatement("UPDATE case SET "
+                            + "description = ? , "
+                            + "crimeID = ?, "
+                            + "OfficerID = ?, "
+                            + "recorded_date = ?"
+                            + "WHERE caseID = ?" 
+                            + "AND criminalID = ?");
+                    db.getPrepStatement().setString(1,DescriptionText.getText());
+                    db.getPrepStatement().setInt(2,Integer.parseInt(CrimeIDCmbBox.getSelectedItem().toString()));
+                    db.getPrepStatement().setInt(3, Integer.parseInt(OfficerIDCmbBox.getSelectedItem().toString()));
+                    db.getPrepStatement().setString(4, DateText.getText());
+                    db.getPrepStatement().setInt(5,Integer.parseInt(CaseIDText.getText()));
+                    db.getPrepStatement().setInt(6,Integer.parseInt(prevCriminalID));
+
+                result = db.executePrepUpdate();
                 if (result > 0) {
                     javax.swing.JLabel label = new javax.swing.JLabel("CASE# " + prevCaseID + " updated successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
@@ -387,7 +351,7 @@ public class EditCases extends javax.swing.JFrame {
                 }
                 db.close();
                 disableErrorLabels();
-                removeLabels();    
+                removeLabels(); 
             }
         } catch (SQLException ex) {
             Logger.getLogger(EditCases.class.getName()).log(Level.SEVERE, null, ex);
@@ -423,7 +387,6 @@ public class EditCases extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CaseIDError;
     private javax.swing.JLabel CaseIDLabel;
     private javax.swing.JLabel CaseIDLabel1;
     private javax.swing.JLabel CaseIDLabel2;
