@@ -28,13 +28,13 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
     private myDBCon db;
     
     PreparedStatement prepStatement;
+    ResultSet rsStation;
     ResultSet rs;
 
     public AddPoliceOfficer(myDBCon db) {
         this.db = db;
         initComponents();
 
-        this.setLocationRelativeTo(null);
         
         lblOfficerIDError.setVisible(false);
         lblFnameError.setVisible(false);
@@ -43,9 +43,13 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         lblRankError.setVisible(false);
 
         try {
-            this.db = new myDBCon("b00083443", "b00083443");
-            rs = db.statement.executeQuery("SELECT officerID FROM officer ORDER BY officerID ASC");
-        } catch (ClassNotFoundException | SQLException ex) {
+            rsStation = db.executeQuery("SELECT stationID FROM police_station ORDER BY stationID ASC");
+            rs = db.executeQuery("SELECT officerID FROM officer ORDER BY officerID ASC");
+            
+            while (rsStation.next()) {
+                StationIDcomboBox.addItem(rsStation.getString("stationID"));
+            }
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
@@ -85,9 +89,8 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         jLabel6.setText("Rank:");
 
         StationIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        StationIDLabel.setText("StationID:");
+        StationIDLabel.setText("Station#:");
 
-        StationIDcomboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         StationIDcomboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StationIDcomboBoxActionPerformed(evt);
@@ -201,7 +204,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OfficerIDLabel)
                     .addComponent(txtOfficerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,7 +234,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StationIDLabel)
                     .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(btnAddOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
@@ -243,87 +246,19 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_StationIDcomboBoxActionPerformed
 
-    private void btnAddOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOfficerActionPerformed
-        // TODO add your handling code here:
-       try {
-       if(isValidData())
-       {
-               
-               prepStatement = db.con.prepareStatement("INSERT INTO officer (officerID, fname, lname, hiredate, rank, stationID) VALUES (? , ? , ?, ? , ? , ?)");
-               prepStatement.setInt(1, Integer.parseInt(txtOfficerID.getText()));
-               prepStatement.setString(2, txtFname.getText().toUpperCase());
-               prepStatement.setString(3, txtLname.getText().toUpperCase());
-               prepStatement.setString(4, txtDate.getText());
-               prepStatement.setString(5, txtRank.getText().toUpperCase());
-               prepStatement.setInt(6, Integer.parseInt(StationIDcomboBox.getSelectedItem().toString()));
-               
-               int result = prepStatement.executeUpdate();
-                if (result > 0) {
-
-                    javax.swing.JLabel label = new javax.swing.JLabel("New Officer added successfully.");
-                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-
-                    clearTxtBoxes();
-                }
-                rs.close();
-                db.statement.close();
-                prepStatement.close();
-           }
-       else
-       {
-           javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
-           label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-           JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-       }
-           }  catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, "Error adding new Officer.");
-       }
-       
-       
-    }//GEN-LAST:event_btnAddOfficerActionPerformed
-
-    public boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    public boolean isDouble(String s) {
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    void clearErrorLabels() {
-        lblOfficerIDError.setText("");
-        lblOfficerIDError.setVisible(false);
-        lblFnameError.setText("");
-        lblFnameError.setVisible(false);
-        lblLnameError.setText("");
-        lblLnameError.setVisible(false);
-        lblDateError.setText("");
-        lblDateError.setVisible(false);
-        lblRankError.setText("");
-        lblRankError.setVisible(false);
-
-    }
-
-    boolean isValidData() {
+     boolean isValidData() {
         boolean result = true;
         clearErrorLabels();
 
-        if (txtOfficerID.getText().trim().isEmpty() || !isInteger(txtOfficerID.getText().trim())) {
+        if (txtOfficerID.getText().trim().isEmpty() || !Validation.isInteger(txtOfficerID.getText().trim()) || txtOfficerID.getText().trim().length() > 4) {
             if (txtOfficerID.getText().trim().isEmpty()) {
                 lblOfficerIDError.setText("Invalid. Cannot be empty.");
-            } else if (!isInteger(txtOfficerID.getText().trim())) {
+            } else if (!Validation.isInteger(txtOfficerID.getText().trim())) {
                 lblOfficerIDError.setText("Invalid. Must be integer.");
+            }
+            else
+            {
+                lblOfficerIDError.setText("Invalid. ID must be less than 10000.");
             }
 
             lblOfficerIDError.setVisible(true);
@@ -334,7 +269,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
             if (txtFname.getText().trim().isEmpty()) {
                 lblFnameError.setText("Invalid. Cannot be empty.");
             } else if ((txtFname.getText().trim().length() > 25)) {
-                lblFnameError.setText("Invalid. Must be < 25 chars.");
+                lblFnameError.setText("Invalid. cannot exceed 25 chars.");
             }
 
             lblFnameError.setVisible(true);
@@ -345,7 +280,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
             if (txtLname.getText().trim().isEmpty()) {
                 lblLnameError.setText("Invalid. Cannot be empty.");
             } else if ((txtLname.getText().trim().length() > 25)) {
-                lblLnameError.setText("Invalid. Must be < 25 chars.");
+                lblLnameError.setText("Invalid. cannot exceed 25 chars.");
             }
 
             lblLnameError.setVisible(true);
@@ -362,7 +297,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
             if (txtRank.getText().trim().isEmpty()) {
                 lblRankError.setText("Invalid. Cannot be empty.");
             } else if ((txtRank.getText().trim().length() > 20)) {
-                lblRankError.setText("Invalid. Must be < 20 chars.");
+                lblRankError.setText("Invalid. cannot exceed 20 chars.");
             }
 
             lblFnameError.setVisible(true);
@@ -371,6 +306,63 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
 
         return result;
     }
+    private void btnAddOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOfficerActionPerformed
+        // TODO add your handling code here:
+       try {
+       if(isValidData())
+       {
+               
+               this.db.setupPrepStatement("INSERT INTO officer (officerID, fname, lname, hiredate, rank, stationID) VALUES (? , ? , ?, ? , ? , ?)");
+               this.db.getPrepStatement().setInt(1, Integer.parseInt(txtOfficerID.getText()));
+               this.db.getPrepStatement().setString(2, txtFname.getText().toUpperCase());
+               this.db.getPrepStatement().setString(3, txtLname.getText().toUpperCase());
+               this.db.getPrepStatement().setString(4, txtDate.getText());
+               this.db.getPrepStatement().setString(5, txtRank.getText().toUpperCase());
+               this.db.getPrepStatement().setInt(6, Integer.parseInt(StationIDcomboBox.getSelectedItem().toString()));
+               
+               int result = this.db.executePrepUpdate();
+                if (result > 0) {
+
+                    javax.swing.JLabel label = new javax.swing.JLabel("New Officer added successfully.");
+                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+
+                    clearTxtBoxes();
+                }
+                
+           }
+       else
+       {
+           javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
+           label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+           JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+       }
+           }  catch (SQLException ex) {
+               lblOfficerIDError.setText("Invalid. Officer ID already exists.");
+               lblOfficerIDError.setVisible(true);
+               JOptionPane.showMessageDialog(null, "Error adding new Officer.");
+       }
+       
+       
+    }//GEN-LAST:event_btnAddOfficerActionPerformed
+
+   
+
+    void clearErrorLabels() {
+        lblOfficerIDError.setText("");
+        lblOfficerIDError.setVisible(false);
+        lblFnameError.setText("");
+        lblFnameError.setVisible(false);
+        lblLnameError.setText("");
+        lblLnameError.setVisible(false);
+        lblDateError.setText("");
+        lblDateError.setVisible(false);
+        lblRankError.setText("");
+        lblRankError.setVisible(false);
+
+    }
+
+   
 
     void clearTxtBoxes() {
         txtOfficerID.setText("");

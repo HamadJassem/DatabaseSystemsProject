@@ -4,6 +4,19 @@
  */
 package javaapplication3;
 
+
+import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 /**
  *
  * @author theag
@@ -14,9 +27,11 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private myDBCon db;
+    ResultSet rs;
     public DisplayPoliceOfficer(myDBCon db) {
         this.db = db;
         initComponents();
+        getNewData();
     }
 
     /**
@@ -31,62 +46,49 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         RankText = new javax.swing.JTextPane();
         LnameLabel = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        DayText = new javax.swing.JTextPane();
         RankLabel = new javax.swing.JLabel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        PositionText = new javax.swing.JTextPane();
         PoliceIDLabel = new javax.swing.JLabel();
         hiredateLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        PoliceIDText = new javax.swing.JTextPane();
-        jLabel7 = new javax.swing.JLabel();
-        PositionLabel = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        MonthText = new javax.swing.JTextPane();
+        OfficerIDText = new javax.swing.JTextPane();
+        StationIDLabel = new javax.swing.JLabel();
         NextButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         FnameText = new javax.swing.JTextPane();
         PrevButton = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         FnameLabel = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        YearText = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         LnameText = new javax.swing.JTextPane();
         picturePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        DateText = new javax.swing.JTextPane();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        StationIDText = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        RankText.setEditable(false);
         jScrollPane7.setViewportView(RankText);
 
         LnameLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         LnameLabel.setText("Last Name:");
 
-        jScrollPane4.setViewportView(DayText);
-
         RankLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         RankLabel.setText("Rank:");
 
-        jScrollPane9.setViewportView(PositionText);
-
         PoliceIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        PoliceIDLabel.setText("Police ID:");
+        PoliceIDLabel.setText("Officer ID:");
 
         hiredateLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         hiredateLabel.setText("HireDate:");
 
-        jScrollPane1.setViewportView(PoliceIDText);
+        OfficerIDText.setEditable(false);
+        jScrollPane1.setViewportView(OfficerIDText);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("/");
-
-        PositionLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        PositionLabel.setText("Position:");
-
-        jScrollPane5.setViewportView(MonthText);
+        StationIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        StationIDLabel.setText("Station#:");
 
         NextButton.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
         NextButton.setText("NEXT >>");
@@ -96,6 +98,7 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
             }
         });
 
+        FnameText.setEditable(false);
         jScrollPane2.setViewportView(FnameText);
 
         PrevButton.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
@@ -106,21 +109,23 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("/");
-
         FnameLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         FnameLabel.setText("First Name:");
-
-        jScrollPane6.setViewportView(YearText);
 
         jLabel1.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jLabel1.setText("Police Officer Display");
 
+        LnameText.setEditable(false);
         jScrollPane3.setViewportView(LnameText);
 
         jLabel2.setText("Picture -maybe-");
         picturePanel.add(jLabel2);
+
+        DateText.setEditable(false);
+        jScrollPane8.setViewportView(DateText);
+
+        StationIDText.setEditable(false);
+        jScrollPane9.setViewportView(StationIDText);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,44 +142,40 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
                     .addComponent(PrevButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
                                 .addComponent(PoliceIDLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(FnameLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LnameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(RankLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PositionLabel)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(StationIDLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(LnameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(RankLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
                                 .addComponent(hiredateLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,33 +186,31 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(picturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(PoliceIDLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FnameLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LnameLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hiredateLabel)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RankLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PositionLabel))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(FnameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(LnameLabel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hiredateLabel))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(RankLabel)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(StationIDLabel)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,44 +221,98 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void getNewData()
+    {
+        try {
+            rs = db.statement.executeQuery("SELECT officerID, fname, lname, hiredate, rank, stationID FROM officer ORDER BY officerID ASC ");
+            rs.beforeFirst();
+            rs.first();
+            populateFields();
+            
+        } catch (SQLException ex) {
+             Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);      
+        }
+    }
+    private void populateFields() {
+        try {
+            OfficerIDText.setText(rs.getString("officerID"));
+            FnameText.setText(rs.getString("fname"));
+            LnameText.setText(rs.getString("Lname"));
+            DateText.setText(rs.getString("hiredate"));
+            RankText.setText(rs.getString("rank"));
+            StationIDText.setText(rs.getString("stationID"));
+            EnableDisableButtons();
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPoliceOfficer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (!rs.isLast()) {
+
+                rs.next();
+                populateFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_NextButtonActionPerformed
 
     private void PrevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrevButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (!rs.isFirst()) {
+                rs.previous();
+                populateFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_PrevButtonActionPerformed
+private void EnableDisableButtons()
+    {
+        try {
+            if (rs.isFirst()) {
+                PrevButton.setVisible(false);
+            } else {
+                PrevButton.setVisible(true);
+            }
+            if (rs.isLast()) {
+                NextButton.setVisible(false);
+            } else {
+                NextButton.setVisible(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextPane DayText;
+    private javax.swing.JTextPane DateText;
     private javax.swing.JLabel FnameLabel;
     private javax.swing.JTextPane FnameText;
     private javax.swing.JLabel LnameLabel;
     private javax.swing.JTextPane LnameText;
-    private javax.swing.JTextPane MonthText;
     private javax.swing.JButton NextButton;
+    private javax.swing.JTextPane OfficerIDText;
     private javax.swing.JLabel PoliceIDLabel;
-    private javax.swing.JTextPane PoliceIDText;
-    private javax.swing.JLabel PositionLabel;
-    private javax.swing.JTextPane PositionText;
     private javax.swing.JButton PrevButton;
     private javax.swing.JLabel RankLabel;
     private javax.swing.JTextPane RankText;
-    private javax.swing.JTextPane YearText;
+    private javax.swing.JLabel StationIDLabel;
+    private javax.swing.JTextPane StationIDText;
     private javax.swing.JLabel hiredateLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JPanel picturePanel;
     // End of variables declaration//GEN-END:variables
