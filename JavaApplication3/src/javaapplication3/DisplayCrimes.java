@@ -8,15 +8,18 @@ package javaapplication3;
  *
  * @author theag
  */
-public class DisplayCrimes extends javax.swing.JPanel implements java.beans.Customizer {
+public class DisplayCrimes extends javax.swing.JFrame {
     
     private Object bean;
 
     /**
      * Creates new customizer DisplayCrimes
      */
-    public DisplayCrimes() {
+    private myDBCon db;
+    public DisplayCrimes(myDBCon db) {
+        this.db = db;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void setObject(Object bean) {
