@@ -4,6 +4,11 @@
  */
 package javaapplication3;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author theag
@@ -17,6 +22,8 @@ public class AddPoliceStation extends javax.swing.JFrame {
     public AddPoliceStation(myDBCon db) {
         this.db = db;
         initComponents();
+        clearErrorLabels();
+        //
     }
 
     /**
@@ -42,6 +49,10 @@ public class AddPoliceStation extends javax.swing.JFrame {
         StationIDLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         AddressText = new javax.swing.JTextPane();
+        AddressError = new javax.swing.JLabel();
+        StationIDError = new javax.swing.JLabel();
+        HeadIDError = new javax.swing.JLabel();
+        StateError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,27 +76,47 @@ public class AddPoliceStation extends javax.swing.JFrame {
 
         AddStationButton.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         AddStationButton.setText("ADD");
+        AddStationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddStationButtonActionPerformed(evt);
+            }
+        });
 
         StationIDLabel1.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         StationIDLabel1.setText("Address:");
 
         jScrollPane2.setViewportView(AddressText);
 
+        AddressError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        AddressError.setForeground(new java.awt.Color(255, 0, 0));
+        AddressError.setText("ERROR LABEL");
+
+        StationIDError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        StationIDError.setForeground(new java.awt.Color(255, 0, 0));
+        StationIDError.setText("ERROR LABEL");
+
+        HeadIDError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        HeadIDError.setForeground(new java.awt.Color(255, 0, 0));
+        HeadIDError.setText("ERROR LABEL");
+
+        StateError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        StateError.setForeground(new java.awt.Color(255, 0, 0));
+        StateError.setText("ERROR LABEL");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(AddStationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(127, 127, 127))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(232, 232, 232)
+                .addComponent(AddStationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(196, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(167, 167, 167))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(StationIDLabel3)
@@ -103,7 +134,13 @@ public class AddPoliceStation extends javax.swing.JFrame {
                         .addComponent(StationIDLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(StationIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AddressError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(HeadIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(StateError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,34 +150,171 @@ public class AddPoliceStation extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(StationIDLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StationIDError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(StationIDLabel1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddressError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(StationIDLabel2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HeadIDError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(StationIDLabel3)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StateError))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(AddStationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+    
+    void clearErrorLabels()
+    {
+        StationIDError.setText("");
+        StationIDError.setVisible(false);
+        AddressError.setText("");
+        AddressError.setVisible(false);
+        HeadIDError.setText("");
+        HeadIDError.setVisible(false);
+        StateError.setText("");
+        StateError.setVisible(false);
+    }
+     
+    boolean isValidData()
+    {
+        boolean flag = true;
+        clearErrorLabels();
+        //check for station ID (empty, integer, and grater than 4)
+        if(StationIDText.getText().trim().isEmpty() ||  !isInteger(StationIDText.getText().trim()))
+        {
+            if(StationIDText.getText().trim().isEmpty())
+            {
+                StationIDError.setText("This field cannot be empty");
+                StationIDError.setVisible(true);
+            }
+            else if(!isInteger(StationIDText.getText().trim()))
+            {
+                StationIDError.setText("This field must be integer");
+                StationIDError.setVisible(true);
+            }
+            
+            flag = false;
+        }
+        if(StationIDText.getText().trim().length() > 4)
+        {
+            StationIDError.setText("The length must be at most than 4 digits");
+            StationIDError.setVisible(true);
+            flag = false;
+        }
+        
+        //check for address (empty and greater than 30)
+        if(AddressText.getText().trim().isEmpty())
+        {
+            AddressError.setText("This field cannot be empty");
+            AddressError.setVisible(true);
+            flag = false;
+        }
+        if(AddressText.getText().trim().length() > 30)
+        {
+            AddressError.setText("The length must at most than 30 characters");
+            AddressError.setVisible(true);
+            flag = false;
+        }
+        
+        //check for headID (empty, not integer, more than 4)
+        if(HeadIDText.getText().trim().isEmpty() || !isInteger(HeadIDText.getText().trim()))
+        {
+            if(HeadIDText.getText().trim().isEmpty())
+            {
+                HeadIDError.setText("This field cannot be empty");
+                HeadIDError.setVisible(true);
+            }
+            else if(!isInteger(HeadIDText.getText().trim()))
+            {
+                HeadIDError.setText("This field must be integer");
+                HeadIDError.setVisible(true);
+            }
+            flag = false;
+        }
+        if(HeadIDText.getText().trim().length() > 4)
+        {
+            HeadIDError.setText("The length must be at most 4 digits");
+            HeadIDError.setVisible(true);
+            flag = false;
+        }
+        
+        //check for state (empty, greater than 30)
+        if(StateText.getText().trim().isEmpty())
+        {
+            StateError.setText("This field cannot be empty");
+            StateError.setVisible(true);
+            flag = false;
+        }
+        if(StateText.getText().trim().length() > 30)
+        {
+            StateError.setText("The length must be at most 30 characters");
+            StateError.setVisible(true);
+            flag = false;
+        }
+        
+        return flag;
+    }
+    
+    private void AddStationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStationButtonActionPerformed
+        //validate data
+        if(isValidData())
+        {
+            try {
+                int result = db.executeUpdate("INSERT INTO police_station VALUES("
+                        + "'" + Integer.parseInt(StationIDText.getText()) + "',"
+                        + "'" + AddressText.getText().toUpperCase() + "',"
+                        + "'" + Integer.parseInt(HeadIDText.getText()) + "',"
+                        + "'" + StateText.getText().toUpperCase() + "'"
+                );
+                
+                if(result > 0)
+                {
+                   javax.swing.JLabel label = new javax.swing.JLabel("New Police Station added successfully.");
+                    label.setFont(new java.awt.Font("Lucida Bright", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE); 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddPoliceStation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else
+        {
+            
+        }
+    }//GEN-LAST:event_AddStationButtonActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddStationButton;
+    private javax.swing.JLabel AddressError;
     private javax.swing.JTextPane AddressText;
+    private javax.swing.JLabel HeadIDError;
     private javax.swing.JTextPane HeadIDText;
+    private javax.swing.JLabel StateError;
     private javax.swing.JTextPane StateText;
+    private javax.swing.JLabel StationIDError;
     private javax.swing.JLabel StationIDLabel;
     private javax.swing.JLabel StationIDLabel1;
     private javax.swing.JLabel StationIDLabel2;
