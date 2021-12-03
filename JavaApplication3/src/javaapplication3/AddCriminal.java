@@ -4,6 +4,16 @@
  */
 package javaapplication3;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author theag
@@ -14,11 +24,54 @@ public class AddCriminal extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private myDBCon db;
+    File selectedFile = null;
     public AddCriminal(myDBCon db) {
         this.db = db;
         initComponents();
     }
-
+    void clearErrorLabels()
+    {
+        CrimeIDError.setText("");
+    }
+    boolean isValidData()
+    {
+        clearErrorLabels();
+        boolean result = true;
+        if(CriminalIDText.getText().trim().isEmpty() || !Validation.isInteger(CriminalIDText.getText().trim()) || CriminalIDText.getText().trim().length() > 4)
+        {
+            if (CriminalIDText.getText().trim().isEmpty()) {
+                CrimeIDError.setText("Invalid. Cannot be empty.");
+            } else if (!Validation.isInteger(CriminalIDText.getText().trim())) {
+                CrimeIDError.setText("Invalid. Must be integer.");
+            }
+            else
+            {
+                CrimeIDError.setText("Invalid. ID must be less than 10000.");
+            }
+            result = false;
+        }
+        if(FirstNameText.getText().trim().isEmpty() || FirstNameText.getText().trim().length() > 25)
+        {
+            if (CriminalIDText.getText().trim().isEmpty()) {
+                FNameError1.setText("Invalid. Cannot be empty.");
+            } else {
+                FNameError1.setText("Invalid. cannot exceed 25 chars.");
+            }
+           
+            result = false;
+        }
+        if(LastNameText.getText().trim().isEmpty() || LastNameText.getText().trim().length() > 25)
+        {
+            if (CriminalIDText.getText().trim().isEmpty()) {
+                LNameError1.setText("Invalid. Cannot be empty.");
+            } else {
+                LNameError1.setText("Invalid. cannot exceed 25 chars.");
+            }
+           
+            result = false;
+        }
+        return result;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,8 +83,6 @@ public class AddCriminal extends javax.swing.JFrame {
 
         CriminalIDLabel = new javax.swing.JLabel();
         CriminalIDText = new javax.swing.JTextField();
-        CrimeIDLabel = new javax.swing.JLabel();
-        CrimeIDText = new javax.swing.JTextField();
         CriminalPicLabel = new javax.swing.JLabel();
         InsertButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -40,6 +91,10 @@ public class AddCriminal extends javax.swing.JFrame {
         FirstNameText = new javax.swing.JTextField();
         LastNameLabel = new javax.swing.JLabel();
         LastNameText = new javax.swing.JTextField();
+        CrimeIDError = new javax.swing.JLabel();
+        CriminalIDError1 = new javax.swing.JLabel();
+        FNameError1 = new javax.swing.JLabel();
+        LNameError1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,15 +104,6 @@ public class AddCriminal extends javax.swing.JFrame {
         CriminalIDText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CriminalIDTextActionPerformed(evt);
-            }
-        });
-
-        CrimeIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        CrimeIDLabel.setText("Crime ID:");
-
-        CrimeIDText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrimeIDTextActionPerformed(evt);
             }
         });
 
@@ -100,74 +146,88 @@ public class AddCriminal extends javax.swing.JFrame {
             }
         });
 
+        CrimeIDError.setToolTipText("");
+
+        CriminalIDError1.setToolTipText("");
+
+        FNameError1.setToolTipText("");
+
+        LNameError1.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(AddCriminalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(38, 38, 38)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(LastNameLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(LastNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(FirstNameLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(FirstNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(CrimeIDLabel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(CrimeIDText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CriminalIDLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(CriminalIDText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(12, 12, 12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(CriminalPicLabel)
+                                    .addComponent(LastNameLabel)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(InsertButton))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(113, 113, 113)
-                            .addComponent(jLabel1))))
-                .addContainerGap(125, Short.MAX_VALUE))
+                                    .addComponent(LastNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(FirstNameLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(FirstNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CriminalIDLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(CriminalIDText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CriminalPicLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(InsertButton)))
+                        .addGap(1, 1, 1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FNameError1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .addComponent(CriminalIDError1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .addComponent(CrimeIDError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LNameError1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addComponent(AddCriminalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(38, 38, 38)
                 .addComponent(jLabel1)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(CriminalIDLabel)
+                                .addComponent(CriminalIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CriminalIDError1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(FirstNameLabel)
+                                .addComponent(FirstNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(FNameError1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LastNameLabel)
+                            .addComponent(LastNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(LNameError1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CriminalIDLabel)
-                    .addComponent(CriminalIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CrimeIDError, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(CriminalPicLabel)
+                        .addComponent(InsertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(FirstNameLabel)
-                    .addComponent(FirstNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LastNameLabel)
-                    .addComponent(LastNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CrimeIDLabel)
-                    .addComponent(CrimeIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CriminalPicLabel)
-                    .addComponent(InsertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
                 .addComponent(AddCriminalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,14 +236,6 @@ public class AddCriminal extends javax.swing.JFrame {
     private void CriminalIDTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CriminalIDTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CriminalIDTextActionPerformed
-
-    private void CrimeIDTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrimeIDTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CrimeIDTextActionPerformed
-
-    private void InsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_InsertButtonActionPerformed
 
     private void FirstNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstNameTextActionPerformed
         // TODO add your handling code here:
@@ -194,20 +246,76 @@ public class AddCriminal extends javax.swing.JFrame {
     }//GEN-LAST:event_LastNameTextActionPerformed
 
     private void AddCriminalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCriminalButtonActionPerformed
-        // TODO add your handling code here:
+        if(isValidData())
+        {
+            try {
+                this.db.setupPrepStatement("INSERT INTO criminal (criminalID, fname, lname, picture) VALUES (? , ? , ?, ?)");
+                this.db.getPrepStatement().setInt(1, Integer.parseInt(CriminalIDText.getText()));
+                this.db.getPrepStatement().setString(2, FirstNameText.getText());
+                this.db.getPrepStatement().setString(3, LastNameText.getText());
+                if(this.selectedFile != null)
+                {
+                    try {
+                        this.db.getPrepStatement().setBlob(4, new FileInputStream(this.selectedFile));
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(AddCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                    this.db.getPrepStatement().setNull(4, java.sql.Types.NULL);
+                }
+                int res = this.db.executePrepUpdate();
+                if (res > 0) {
+                    javax.swing.JLabel label = new javax.swing.JLabel("New user added successfully.");
+                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AddCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Failed to add Criminal: " + ex.getMessage());
+            }
+           
+           
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Failed to add Criminal");
+        }
+            
     }//GEN-LAST:event_AddCriminalButtonActionPerformed
+
+    private void InsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jfc = new JFileChooser();
+        jfc.setDialogTitle("Select an image");
+        jfc.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG, JPG, JPEG, and GIF images", "png", "jpg", "jpeg", "gif");
+        jfc.addChoosableFileFilter(filter);
+        
+        int returnValue = jfc.showOpenDialog(null);
+        
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            selectedFile = jfc.getSelectedFile();
+            System.out.println(selectedFile.getAbsolutePath());
+	}
+        
+        
+    }//GEN-LAST:event_InsertButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddCriminalButton;
-    private javax.swing.JLabel CrimeIDLabel;
-    private javax.swing.JTextField CrimeIDText;
+    private javax.swing.JLabel CrimeIDError;
+    private javax.swing.JLabel CriminalIDError1;
     private javax.swing.JLabel CriminalIDLabel;
     private javax.swing.JTextField CriminalIDText;
     private javax.swing.JLabel CriminalPicLabel;
+    private javax.swing.JLabel FNameError1;
     private javax.swing.JLabel FirstNameLabel;
     private javax.swing.JTextField FirstNameText;
     private javax.swing.JButton InsertButton;
+    private javax.swing.JLabel LNameError1;
     private javax.swing.JLabel LastNameLabel;
     private javax.swing.JTextField LastNameText;
     private javax.swing.JLabel jLabel1;

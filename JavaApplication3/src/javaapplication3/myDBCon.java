@@ -17,6 +17,7 @@ public class myDBCon {
     private String DBPASS;
     Connection con;
     Statement statement;
+    PreparedStatement prep;
    
     //define constructor of myDBCon where username and password needs to be passed to the constructor
     public myDBCon(String u, String p) throws SQLException, ClassNotFoundException
@@ -28,10 +29,7 @@ public class myDBCon {
         con = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
         statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         statement.executeUpdate("ALTER SESSION SET NLS_DATE_FORMAT ='DD-MM-YYYY'");
-        statement.executeUpdate("ALTER SESSION SET NLS_TIMESTAMP_FORMAT ='DD-MM-YYYY HH:MI:SS.FF'");
-        
-
-        
+        statement.executeUpdate("ALTER SESSION SET NLS_TIMESTAMP_FORMAT ='DD-MM-YYYY HH:MI:SS.FF'");        
     }
     
     //query execution methods
@@ -46,7 +44,22 @@ public class myDBCon {
         statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
         return statement.executeUpdate(sql);
     }
-
+    public void setupPrepStatement(String sql) throws SQLException
+    {
+        prep = con.prepareStatement(sql);
+    }
+    public PreparedStatement getPrepStatement()
+    {
+        return this.prep;
+    }
+    public int executePrepUpdate() throws SQLException
+    {
+        return this.prep.executeUpdate();
+    }
+    public ResultSet executePrepQuery() throws SQLException
+    {
+        return this.prep.executeQuery();
+    }
     public void close() throws SQLException
     {
         statement.close();
