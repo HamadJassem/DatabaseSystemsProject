@@ -3,6 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication3;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -14,9 +24,12 @@ public class EditCriminal extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private myDBCon db;
+    private ResultSet rs;
+    File selectedFile = null;
     public EditCriminal(myDBCon db) {
         this.db = db;
         initComponents();
+        clearErrorLabels();
     }
 
     /**
@@ -38,16 +51,17 @@ public class EditCriminal extends javax.swing.JFrame {
         LastNameText = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         SearchText = new javax.swing.JTextPane();
-        CrimeIDLabel = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        CrimeIDText = new javax.swing.JTextPane();
         CriminalIDLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         CriminalIDText = new javax.swing.JTextPane();
-        PicturePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         FirstNameLabel = new javax.swing.JLabel();
+        SelectPicture = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Reset = new javax.swing.JButton();
+        lbCriminalIDError = new javax.swing.JLabel();
+        lblFnameError = new javax.swing.JLabel();
+        lblLnameError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,9 +94,6 @@ public class EditCriminal extends javax.swing.JFrame {
         SearchText.setToolTipText("search criminal by ID"); // NOI18N
         jScrollPane1.setViewportView(SearchText);
 
-        CrimeIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        CrimeIDLabel.setText("Crime ID:");
-
         searchButton.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         searchButton.setText("search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -91,83 +102,110 @@ public class EditCriminal extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane6.setViewportView(CrimeIDText);
-
         CriminalIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         CriminalIDLabel.setText("Criminal ID:");
 
         jScrollPane2.setViewportView(CriminalIDText);
 
-        jLabel1.setText("Picture -maybe-");
-        PicturePanel.add(jLabel1);
-
         FirstNameLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         FirstNameLabel.setText("First Name:");
+
+        SelectPicture.setText("Select Picture");
+        SelectPicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectPictureActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("No Picture Selected");
+
+        Reset.setText("Reset Picture");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        });
+
+        lbCriminalIDError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lbCriminalIDError.setForeground(new java.awt.Color(255, 0, 0));
+        lbCriminalIDError.setText("error label");
+
+        lblFnameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblFnameError.setForeground(new java.awt.Color(255, 0, 0));
+        lblFnameError.setText("error label");
+
+        lblLnameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblLnameError.setForeground(new java.awt.Color(255, 0, 0));
+        lblLnameError.setText("error label");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(219, 219, 219)
+                .addComponent(EditCriminalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(153, 153, 153)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(searchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 10, Short.MAX_VALUE)
-                        .addComponent(PicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(CrimeIDLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LastNameLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(FirstNameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(CriminalIDLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(53, 53, 53))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(EditCriminalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(searchButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane1))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(FirstNameLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CriminalIDLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(155, 155, 155)
-                                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbCriminalIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(9, 9, 9)
+                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblLnameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(162, 162, 162))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Reset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SelectPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(EditCriminalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(PicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CriminalIDLabel)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -175,41 +213,198 @@ public class EditCriminal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(FirstNameLabel)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LastNameLabel)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CrimeIDLabel)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UpdateButton)
-                    .addComponent(DeleteButton))
-                .addGap(29, 29, 29))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SelectPicture)
+                            .addComponent(jLabel1)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lbCriminalIDError)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblFnameError)
+                            .addGap(37, 37, 37))
+                        .addComponent(lblLnameError, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGap(27, 27, 27)
+                .addComponent(Reset)
+                .addGap(15, 15, 15)
+                .addComponent(UpdateButton)
+                .addGap(25, 25, 25)
+                .addComponent(DeleteButton)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            
+
+            if (isValidData()) {
+                if(this.selectedFile == null)
+                {
+                    this.db.setupPrepStatement("UPDATE criminal SET fname = ?, lname = ? WHERE criminalID = ?");
+                    this.db.getPrepStatement().setString(1, FirstNameText.getText().toUpperCase());
+                    this.db.getPrepStatement().setString(2, LastNameText.getText().toUpperCase());
+                    this.db.getPrepStatement().setString(3, CriminalIDText.getText());
+                }
+                else
+                {
+                    this.db.setupPrepStatement("UPDATE criminal SET fname = ?, lname = ?, picture = ? WHERE criminalID = ?");
+                    this.db.getPrepStatement().setString(1, FirstNameText.getText().toUpperCase());
+                    this.db.getPrepStatement().setString(2, LastNameText.getText().toUpperCase());
+                    try {
+                        this.db.getPrepStatement().setBlob(3, new FileInputStream(this.selectedFile));
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(EditCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    this.db.getPrepStatement().setString(4, CriminalIDText.getText());
+                }
+                
+                
+                
+                
+                int res = this.db.executePrepUpdate();
+                if (res > 0) {
+                    javax.swing.JLabel label = new javax.swing.JLabel("New user added successfully.");
+                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                }
+            
+            } else {
+
+                javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
+                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Error updating Criminal. " + e.getMessage());
+
+        }
     }//GEN-LAST:event_UpdateButtonActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+           this.db.setupPrepStatement("DELETE criminal WHERE criminalID = " + CriminalIDText.getText().trim());
+            int result = this.db.executePrepUpdate();
+            if (result > 0) {
+                javax.swing.JLabel label = new javax.swing.JLabel("Criminal of ID: " + CriminalIDText.getText().trim() + " deleted successfully.");
+                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }
+
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error Deleting Criminal.");
+
+        }
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+         try {
+            rs = db.executeQuery("SELECT * FROM criminal WHERE criminalID = " + "'" + SearchText.getText() + "'");
+            if(rs.next())
+            {
+               CriminalIDText.setText(rs.getString("criminalID"));
+               FirstNameText.setText(rs.getString("fname"));
+               LastNameText.setText(rs.getString("lname"));
+               db.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EditCases.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    
+    void clearErrorLabels() {
+        lbCriminalIDError.setText("");
+        lbCriminalIDError.setVisible(false);
+        lblFnameError.setText("");
+        lblFnameError.setVisible(false);
+        lblLnameError.setText("");
+        lblLnameError.setVisible(false);
+
+    }
+    boolean isValidData() {
+        boolean result = true;
+        clearErrorLabels();
+
+       
+
+        if (CriminalIDText.getText().trim().isEmpty() || (CriminalIDText.getText().trim().length() > 4)) {
+            if (CriminalIDText.getText().trim().isEmpty()) {
+                lblFnameError.setText("Invalid. Cannot be empty.");
+            } else if ((CriminalIDText.getText().trim().length() > 4)) {
+                lblFnameError.setText("Invalid. cannot exceed 4 chars.");
+            }
+
+            lbCriminalIDError.setVisible(true);
+            result = false;
+        }
+
+        if (FirstNameText.getText().trim().isEmpty() || (FirstNameText.getText().trim().length() > 25)) {
+            if (FirstNameText.getText().trim().isEmpty()) {
+                lblFnameError.setText("Invalid. Cannot be empty.");
+            } else if ((FirstNameText.getText().trim().length() > 25)) {
+                lblFnameError.setText("Invalid. cannot exceed 25 chars.");
+            }
+
+            lblFnameError.setVisible(true);
+            result = false;
+        }
+        
+        
+
+        if (LastNameText.getText().trim().isEmpty() || (LastNameText.getText().trim().length() > 25)) {
+            if (LastNameText.getText().trim().isEmpty())
+            {
+                lblLnameError.setText("Invalid. Cannot be empty.");
+            } else if ((LastNameText.getText().trim().length() > 25))
+            {
+                lblLnameError.setText("Invalid. cannot exceed 25 chars.");
+            }
+
+            lblLnameError.setVisible(true);
+            result = false;
+        }
+
+        return result;
+    }
+    
+    private void SelectPictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectPictureActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jfc = new JFileChooser();
+        jfc.setDialogTitle("Select an image");
+        jfc.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG, JPG, JPEG, and GIF images", "png", "jpg", "jpeg", "gif");
+        jfc.addChoosableFileFilter(filter);
+        
+        int returnValue = jfc.showOpenDialog(null);
+        
+        if (returnValue == JFileChooser.APPROVE_OPTION)
+        {
+            selectedFile = jfc.getSelectedFile();
+            jLabel1.setText(selectedFile.getAbsolutePath());
+	}
+        
+    }//GEN-LAST:event_SelectPictureActionPerformed
+
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
+       selectedFile = null;
+       jLabel1.setText("No Picture Selected");
+    }//GEN-LAST:event_ResetActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CrimeIDLabel;
-    private javax.swing.JTextPane CrimeIDText;
     private javax.swing.JLabel CriminalIDLabel;
     private javax.swing.JTextPane CriminalIDText;
     private javax.swing.JButton DeleteButton;
@@ -218,15 +413,18 @@ public class EditCriminal extends javax.swing.JFrame {
     private javax.swing.JTextPane FirstNameText;
     private javax.swing.JLabel LastNameLabel;
     private javax.swing.JTextPane LastNameText;
-    private javax.swing.JPanel PicturePanel;
+    private javax.swing.JButton Reset;
     private javax.swing.JTextPane SearchText;
+    private javax.swing.JButton SelectPicture;
     private javax.swing.JButton UpdateButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel lbCriminalIDError;
+    private javax.swing.JLabel lblFnameError;
+    private javax.swing.JLabel lblLnameError;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -186,38 +186,47 @@ public class DisplayCriminal extends javax.swing.JFrame {
             CriminalIDText.setText(rs.getString("criminalID"));
             FnameText.setText(rs.getString("fname"));
             LnameText.setText(rs.getString("lname"));
-            
-            if(rs.getBlob("picture") != null)
+            new Thread(new Runnable()
             {
-                File pic = new File("current.png");
-                try {
-                    FileOutputStream output = new FileOutputStream(pic);
-                    InputStream input = rs.getBinaryStream("picture");
-                    byte buffer[] = new byte[1024];
+                public void run()
+                {
                     try {
-                        while(input.read(buffer)>0)
+                        if(rs.getBlob("picture") != null)
                         {
-                            output.write(buffer);
+                            File pic = new File("current.png");
+                            try {
+                                FileOutputStream output = new FileOutputStream(pic);
+                                InputStream input = rs.getBinaryStream("picture");
+                                byte buffer[] = new byte[1024];
+                                try {
+                                    while(input.read(buffer)>0)
+                                    {
+                                        output.write(buffer);
+                                    }
+                                    String path = pic.getAbsolutePath();
+                                    ImageIcon myimg = new ImageIcon(path);
+                                    Image img = myimg.getImage();
+                                    Image newImg= img.getScaledInstance(Picture.getWidth(), Picture.getHeight(), Image.SCALE_SMOOTH);
+                                    ImageIcon finalImage = new ImageIcon(newImg);
+                                    Picture.setIcon(finalImage);
+                                    
+                                } catch (IOException ex) {
+                                    Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
                         }
-                        String path = pic.getAbsolutePath();
-                        ImageIcon myimg = new ImageIcon(path);
-                        Image img = myimg.getImage();
-                        Image newImg= img.getScaledInstance(Picture.getWidth(), Picture.getHeight(), Image.SCALE_SMOOTH);
-                        ImageIcon finalImage = new ImageIcon(newImg);
-                        Picture.setIcon(finalImage);
-                        
-                    } catch (IOException ex) {
+                        else
+                        {
+                            Picture.setIcon(null);
+                        }       } catch (SQLException ex) {
                         Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
-            }
-            else
-            {
-                Picture.setIcon(null);
-            }
+            }).start();
+            
 
             EnableDisableButtons();
         } catch (SQLException ex) {

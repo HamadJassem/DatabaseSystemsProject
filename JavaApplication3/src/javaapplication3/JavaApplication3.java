@@ -26,7 +26,11 @@ public class JavaApplication3 {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JavaApplication3.class.getName()).log(Level.SEVERE, null, ex);
         }
-        (new DisplayCriminal(db)).setVisible(true);
+        
+        
+            (new DisplayCriminal(db)).setVisible(true);
+       
+        
     }
     
 }

@@ -224,7 +224,7 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
     private void getNewData()
     {
         try {
-            rs = db.statement.executeQuery("SELECT officerID, fname, lname, hiredate, rank, stationID FROM officer ORDER BY officerID ASC ");
+            rs = db.executeQuery("SELECT officerID, fname, lname, hiredate, rank, stationID FROM officer ORDER BY officerID ASC ");
             rs.beforeFirst();
             rs.first();
             populateFields();

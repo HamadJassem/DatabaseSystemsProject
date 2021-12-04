@@ -447,7 +447,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         // TODO add your handling code here:
         try {
-           this.db.setupPrepStatement("DELETE emp WHERE empno = " + txtOfficerID.getText().trim());
+           this.db.setupPrepStatement("DELETE officer WHERE officerID = " + txtOfficerID.getText().trim());
             int result = this.db.executePrepUpdate();
             if (result > 0) {
                 javax.swing.JLabel label = new javax.swing.JLabel("Officer of ID: " + txtOfficerID.getText().trim() + " deleted successfully.");
@@ -458,7 +458,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
 
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error adding new employee.");
+            JOptionPane.showMessageDialog(null, "Error Deleting Officer.");
 
         }
     }//GEN-LAST:event_DeleteButtonActionPerformed
