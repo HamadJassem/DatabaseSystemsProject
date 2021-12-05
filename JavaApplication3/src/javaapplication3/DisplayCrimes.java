@@ -4,27 +4,55 @@
  */
 package javaapplication3;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author theag
  */
 public class DisplayCrimes extends javax.swing.JFrame {
     
-    private Object bean;
+    
 
-    /**
-     * Creates new customizer DisplayCrimes
-     */
+    
     private myDBCon db;
+    ResultSet rs;
     public DisplayCrimes(myDBCon db) {
         this.db = db;
         initComponents();
         this.setLocationRelativeTo(null);
+        getNewData();
+        this.setSize(540, 400);
     }
     
-    public void setObject(Object bean) {
-        this.bean = bean;
+    private void getNewData()
+    {
+        try {
+            rs = db.executeQuery("SELECT crimeID, name, category FROM crime ORDER BY crimeID ASC ");
+            rs.beforeFirst();
+            rs.first();
+            populateFields();
+            
+        } catch (SQLException ex) {
+             Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);      
+        }
     }
+    private void populateFields() {
+        try {
+            CrimeIDText.setText(rs.getString("crimeID"));
+            NameText.setText(rs.getString("name"));
+            CategoryText.setText(rs.getString("category"));
+           
+            EnableDisableButtons();
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(EditPoliceOfficer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,15 +63,56 @@ public class DisplayCrimes extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        CrimeIDLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        CrimeIDText = new javax.swing.JTextPane();
+        NameLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        NameText = new javax.swing.JTextPane();
+        CategoryLabel = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        CategoryText = new javax.swing.JTextPane();
+        PrevButton = new javax.swing.JButton();
+        NextButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jLabel1.setText("Crimes Display");
 
-        jLabel2.setText("idea: pic then attributes");
+        CrimeIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        CrimeIDLabel.setText("Crime ID:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        jScrollPane1.setViewportView(CrimeIDText);
+
+        NameLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        NameLabel.setText("Name:");
+
+        jScrollPane2.setViewportView(NameText);
+
+        CategoryLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        CategoryLabel.setText("Category:");
+
+        jScrollPane3.setViewportView(CategoryText);
+
+        PrevButton.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
+        PrevButton.setText("<< PREV");
+        PrevButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrevButtonActionPerformed(evt);
+            }
+        });
+
+        NextButton.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
+        NextButton.setText("NEXT >>");
+        NextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -51,8 +120,27 @@ public class DisplayCrimes extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(181, 181, 181))
             .addGroup(layout.createSequentialGroup()
-                .addGap(216, 216, 216)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CategoryLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(NameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CrimeIDLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(PrevButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -60,15 +148,79 @@ public class DisplayCrimes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel1)
-                .addGap(75, 75, 75)
-                .addComponent(jLabel2)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CrimeIDLabel)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NameLabel)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CategoryLabel)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PrevButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void PrevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrevButtonActionPerformed
+        try {
+            if (!rs.isFirst()) {
+                rs.previous();
+                populateFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_PrevButtonActionPerformed
+
+    private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
+        try {
+            if (!rs.isLast()) {
+
+                rs.next();
+                populateFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_NextButtonActionPerformed
+    private void EnableDisableButtons()
+        {
+            try {
+                if (rs.isFirst()) {
+                    PrevButton.setVisible(false);
+                } else {
+                    PrevButton.setVisible(true);
+                }
+                if (rs.isLast()) {
+                    NextButton.setVisible(false);
+                } else {
+                    NextButton.setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CategoryLabel;
+    private javax.swing.JTextPane CategoryText;
+    private javax.swing.JLabel CrimeIDLabel;
+    private javax.swing.JTextPane CrimeIDText;
+    private javax.swing.JLabel NameLabel;
+    private javax.swing.JTextPane NameText;
+    private javax.swing.JButton NextButton;
+    private javax.swing.JButton PrevButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }
