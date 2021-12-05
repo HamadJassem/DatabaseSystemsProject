@@ -25,6 +25,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame1
      */
+    int HeadID;
     private myDBCon db;
     ResultSet rs;
     ResultSet rsStation;
@@ -50,30 +51,32 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     {
         rsStation = db.executeQuery("SELECT distinct stationID FROM police_station ORDER BY stationID ASC");
         while (rsStation.next()) {
-                StationIDcomboBox.addItem(rsStation.getString("stationID"));
+                StationIDCmbBox.addItem(rsStation.getString("stationID"));
             }
     }
     
+    void resetLabels()
+    {
+        SearchText.setText("");
+        txtOfficerID.setText("");
+        txtFname.setText("");
+        txtLname.setText("");
+        txtDate.setText("");
+        txtRank.setText("");
+        StationIDCmbBox.removeAllItems();
+    }
   
     void clearErrorLabels() {
         lblOfficerIDError.setText("");
-        lblOfficerIDError.setVisible(false);
         lblFnameError.setText("");
-        lblFnameError.setVisible(false);
         lblLnameError.setText("");
-        lblLnameError.setVisible(false);
         lblDateError.setText("");
-        lblDateError.setVisible(false);
         lblRankError.setText("");
-        lblRankError.setVisible(false);
-
     }
     
     boolean isValidData() {
         boolean result = true;
         clearErrorLabels();
-
-       
 
         if (txtFname.getText().trim().isEmpty() || (txtFname.getText().trim().length() > 10)) {
             if (txtFname.getText().trim().isEmpty()) {
@@ -130,12 +133,10 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
 
         jScrollPane7 = new javax.swing.JScrollPane();
         txtRank = new javax.swing.JTextPane();
-        StationIDcomboBox = new javax.swing.JComboBox<>();
+        StationIDCmbBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         SearchText = new javax.swing.JTextPane();
-        PicturePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
         OfficerIDLabel = new javax.swing.JLabel();
         UpdateButton = new javax.swing.JButton();
@@ -159,13 +160,13 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
         jScrollPane8 = new javax.swing.JScrollPane();
         txtDate = new javax.swing.JTextPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jScrollPane7.setViewportView(txtRank);
 
-        StationIDcomboBox.addActionListener(new java.awt.event.ActionListener() {
+        StationIDCmbBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StationIDcomboBoxActionPerformed(evt);
+                StationIDCmbBoxActionPerformed(evt);
             }
         });
 
@@ -174,9 +175,6 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
 
         SearchText.setToolTipText("search offiicer by ID"); // NOI18N
         jScrollPane1.setViewportView(SearchText);
-
-        jLabel1.setText("Picture -maybe-");
-        PicturePanel.add(jLabel1);
 
         searchButton.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         searchButton.setText("search");
@@ -255,34 +253,13 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(EditCriminalInfoLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(155, 155, 155)
-                                        .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(62, 62, 62)))
-                        .addGap(95, 95, 95))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(PicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(OfficerIDLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblOfficerIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -291,7 +268,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LnameLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,13 +286,34 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblRankError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblRankError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(StationIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(searchButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(194, 194, 194)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(155, 155, 155)
+                                        .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(145, 145, 145)
+                                .addComponent(EditCriminalInfoLabel)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,62 +324,51 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLnameError, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(OfficerIDLabel)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblOfficerIDError))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(FnameLabel)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFnameError))
-                                .addGap(14, 14, 14)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LnameLabel)))
-                            .addComponent(lblLnameError, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(OfficerIDLabel)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(16, 16, 16)
-                                    .addComponent(hiredateLabel))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblDateError)))
+                                .addComponent(lblOfficerIDError, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RankLabel)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRankError))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(PicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFnameError)
+                            .addComponent(FnameLabel))
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LnameLabel))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDateError)
+                    .addComponent(hiredateLabel)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RankLabel)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRankError))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(StationIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UpdateButton)
                     .addComponent(DeleteButton))
-                .addGap(66, 66, 66))
+                .addGap(50, 50, 50))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void StationIDcomboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StationIDcomboBoxActionPerformed
+    private void StationIDCmbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StationIDCmbBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_StationIDcomboBoxActionPerformed
+    }//GEN-LAST:event_StationIDCmbBoxActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
@@ -395,8 +382,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                txtDate.setText(rs.getString("hiredate"));
                txtRank.setText(rs.getString("rank"));
                setComboBox();
-               StationIDcomboBox.setSelectedItem(rs.getString("stationID"));
-               
+               StationIDCmbBox.setSelectedItem(rs.getString("stationID"));
                db.close();
             }
         } catch (SQLException ex) {
@@ -407,15 +393,14 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
         // TODO add your handling code here:
         try {
-            
-
+            clearErrorLabels();
             if (isValidData()) {
                this.db.setupPrepStatement("UPDATE officer SET fname = ?, lname = ?, hiredate = ?, rank = ?, stationID = ? WHERE officerID = ?");
                 this.db.getPrepStatement().setString(1, txtFname.getText().toUpperCase());
                 this.db.getPrepStatement().setString(2, txtLname.getText().toUpperCase());
                 this.db.getPrepStatement().setString(3, txtDate.getText());
                 this.db.getPrepStatement().setString(4, txtRank.getText().toUpperCase());
-                this.db.getPrepStatement().setInt(5, Integer.parseInt(StationIDcomboBox.getSelectedItem().toString()));
+                this.db.getPrepStatement().setInt(5, Integer.parseInt(StationIDCmbBox.getSelectedItem().toString()));
                 this.db.getPrepStatement().setInt(6, Integer.parseInt(txtOfficerID.getText().trim()));
                 int result = this.db.executePrepUpdate();
                 if (result > 0) {
@@ -423,9 +408,7 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
                     javax.swing.JLabel label = new javax.swing.JLabel("Officer of ID: " + txtOfficerID.getText() + " updated successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-
-                  
-
+                    resetLabels();
                 } 
             
             } else {
@@ -447,18 +430,25 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         // TODO add your handling code here:
         try {
-           this.db.setupPrepStatement("DELETE officer WHERE officerID = " + txtOfficerID.getText().trim());
-            int result = this.db.executePrepUpdate();
+            
+            rs = db.executeQuery("SELECT OfficerID FROM officer WHERE StationID = " + "'" + StationIDCmbBox.getSelectedItem() + "'" + "AND rank = " + "'" + "Captain" + "'"); 
+            rs.next();
+            HeadID = rs.getInt("OfficerID"); 
+            //if officer deleted, the cases will be reffered to the head
+            db.setupPrepStatement("UPDATE case SET OfficerID = " + "'" + HeadID  + "'" + "WHERE OfficerID = " + "'" + txtOfficerID.getText() + "'");
+            int result = db.executePrepUpdate();
+            this.db.setupPrepStatement("DELETE officer WHERE OfficerID = " + txtOfficerID.getText().trim());
+            result = this.db.executePrepUpdate();
             if (result > 0) {
                 javax.swing.JLabel label = new javax.swing.JLabel("Officer of ID: " + txtOfficerID.getText().trim() + " deleted successfully.");
                 label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                
+                JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE); 
+                resetLabels();
             }
 
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error Deleting Officer.");
+            JOptionPane.showMessageDialog(null, "Error removing Officer.");
 
         }
     }//GEN-LAST:event_DeleteButtonActionPerformed
@@ -471,13 +461,11 @@ public class EditPoliceOfficer extends javax.swing.JFrame {
     private javax.swing.JLabel FnameLabel;
     private javax.swing.JLabel LnameLabel;
     private javax.swing.JLabel OfficerIDLabel;
-    private javax.swing.JPanel PicturePanel;
     private javax.swing.JLabel RankLabel;
     private javax.swing.JTextPane SearchText;
-    private javax.swing.JComboBox<String> StationIDcomboBox;
+    private javax.swing.JComboBox<String> StationIDCmbBox;
     private javax.swing.JButton UpdateButton;
     private javax.swing.JLabel hiredateLabel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -32,20 +32,13 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
     ResultSet rs;
 
     public AddPoliceOfficer(myDBCon db) {
-        this.db = db;
+        this.db = db;     
         initComponents();
-
-        
-        lblOfficerIDError.setVisible(false);
-        lblFnameError.setVisible(false);
-        lblLnameError.setVisible(false);
-        lblDateError.setVisible(false);
-        lblRankError.setVisible(false);
-
+        lblRankError.setText("");
+        clearErrorLabels();
         try {
             rsStation = db.executeQuery("SELECT stationID FROM police_station ORDER BY stationID ASC");
             rs = db.executeQuery("SELECT officerID FROM officer ORDER BY officerID ASC");
-            
             while (rsStation.next()) {
                 StationIDcomboBox.addItem(rsStation.getString("stationID"));
             }
@@ -65,7 +58,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
 
         jLabel6 = new javax.swing.JLabel();
         StationIDLabel = new javax.swing.JLabel();
-        StationIDcomboBox = new javax.swing.JComboBox<>();
+        RankcomboBox = new javax.swing.JComboBox<>();
         FirstNameLabel = new javax.swing.JLabel();
         LnameLabel = new javax.swing.JLabel();
         hiredateLabel = new javax.swing.JLabel();
@@ -74,7 +67,6 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         txtOfficerID = new javax.swing.JTextField();
         txtFname = new javax.swing.JTextField();
         txtLname = new javax.swing.JTextField();
-        txtRank = new javax.swing.JTextField();
         lblOfficerIDError = new javax.swing.JLabel();
         lblFnameError = new javax.swing.JLabel();
         lblRankError = new javax.swing.JLabel();
@@ -82,8 +74,10 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         btnAddOfficer = new javax.swing.JButton();
         txtDate = new javax.swing.JTextField();
         lblDateError = new javax.swing.JLabel();
+        StationIDcomboBox = new javax.swing.JComboBox<>();
+        lblStationIDError = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel6.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         jLabel6.setText("Rank:");
@@ -91,9 +85,15 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         StationIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         StationIDLabel.setText("Station#:");
 
-        StationIDcomboBox.addActionListener(new java.awt.event.ActionListener() {
+        RankcomboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Officer", "Captain" }));
+        RankcomboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                RankcomboBoxItemStateChanged(evt);
+            }
+        });
+        RankcomboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StationIDcomboBoxActionPerformed(evt);
+                RankcomboBoxActionPerformed(evt);
             }
         });
 
@@ -139,6 +139,16 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         lblDateError.setForeground(new java.awt.Color(255, 0, 0));
         lblDateError.setText("error label");
 
+        StationIDcomboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StationIDcomboBoxActionPerformed(evt);
+            }
+        });
+
+        lblStationIDError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblStationIDError.setForeground(new java.awt.Color(255, 0, 0));
+        lblStationIDError.setText("error label");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,27 +165,27 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(hiredateLabel)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtRank, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblRankError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblDateError, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(LnameLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtLname, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(LnameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtLname, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblLnameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(hiredateLabel)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                        .addComponent(lblStationIDError, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(RankcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblRankError, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblLnameError, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(346, 346, 346))
+                                        .addComponent(lblDateError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(OfficerIDLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -187,11 +197,9 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(StationIDLabel)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnAddOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(81, 81, 81)
+                                .addComponent(btnAddOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(StationIDLabel))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -224,17 +232,19 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                     .addComponent(hiredateLabel)
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDateError))
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblRankError)
-                        .addComponent(txtRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(StationIDLabel)
-                    .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addComponent(RankcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblRankError))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(StationIDLabel)
+                        .addComponent(StationIDcomboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStationIDError))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(btnAddOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
@@ -242,13 +252,13 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void StationIDcomboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StationIDcomboBoxActionPerformed
+    private void RankcomboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankcomboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_StationIDcomboBoxActionPerformed
+    }//GEN-LAST:event_RankcomboBoxActionPerformed
 
      boolean isValidData() {
         boolean result = true;
-        clearErrorLabels();
+        
 
         if (txtOfficerID.getText().trim().isEmpty() || !Validation.isInteger(txtOfficerID.getText().trim()) || txtOfficerID.getText().trim().length() > 4) {
             if (txtOfficerID.getText().trim().isEmpty()) {
@@ -261,7 +271,6 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                 lblOfficerIDError.setText("Invalid. ID must be less than 10000.");
             }
 
-            lblOfficerIDError.setVisible(true);
             result = false;
         }
 
@@ -272,7 +281,6 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                 lblFnameError.setText("Invalid. cannot exceed 25 chars.");
             }
 
-            lblFnameError.setVisible(true);
             result = false;
         }
 
@@ -283,31 +291,27 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                 lblLnameError.setText("Invalid. cannot exceed 25 chars.");
             }
 
-            lblLnameError.setVisible(true);
             result = false;
         }
         
         if (txtDate.getText().trim().isEmpty()) {
             lblDateError.setText("Invalid. Cannot be empty.");
-            lblDateError.setVisible(true);
+            result = false;
+        }
+        
+        if(StationIDcomboBox.getItemCount() == 0)
+        {
+            lblStationIDError.setText("Invalid. Cannot be empty.");
             result = false;
         }
 
-        if (txtRank.getText().trim().isEmpty() || (txtRank.getText().trim().length() > 10)) {
-            if (txtRank.getText().trim().isEmpty()) {
-                lblRankError.setText("Invalid. Cannot be empty.");
-            } else if ((txtRank.getText().trim().length() > 20)) {
-                lblRankError.setText("Invalid. cannot exceed 20 chars.");
-            }
-
-            lblFnameError.setVisible(true);
-            result = false;
-        }
+        
 
         return result;
     }
     private void btnAddOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOfficerActionPerformed
         // TODO add your handling code here:
+       clearErrorLabels();
        try {
        if(isValidData())
        {
@@ -317,7 +321,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
                this.db.getPrepStatement().setString(2, txtFname.getText().toUpperCase());
                this.db.getPrepStatement().setString(3, txtLname.getText().toUpperCase());
                this.db.getPrepStatement().setString(4, txtDate.getText());
-               this.db.getPrepStatement().setString(5, txtRank.getText().toUpperCase());
+               this.db.getPrepStatement().setString(5, RankcomboBox.getSelectedItem().toString().toUpperCase());
                this.db.getPrepStatement().setInt(6, Integer.parseInt(StationIDcomboBox.getSelectedItem().toString()));
                
                int result = this.db.executePrepUpdate();
@@ -339,27 +343,63 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
        }
            }  catch (SQLException ex) {
                lblOfficerIDError.setText("Invalid. Officer ID already exists.");
-               lblOfficerIDError.setVisible(true);
                JOptionPane.showMessageDialog(null, "Error adding new Officer.");
        }
        
        
     }//GEN-LAST:event_btnAddOfficerActionPerformed
 
+    private void StationIDcomboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StationIDcomboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StationIDcomboBoxActionPerformed
+
+    private void RankcomboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_RankcomboBoxItemStateChanged
+        try
+        {
+            StationIDcomboBox.removeAllItems();
+            if(RankcomboBox.getSelectedItem().toString().equals("Captain"))     
+            {
+                rs = db.executeQuery("SELECT * FROM police_station WHERE HeadID = null");
+                if(rs.next())
+                {
+                    rs.previous();
+                    while(rs.next())
+                    {
+                        StationIDcomboBox.addItem(rs.getString("StationID"));
+                        RankcomboBox.setSelectedItem("Officer"); // officer
+                    }
+                }
+                else
+                {
+                    lblRankError.setText("Warning: there are no station with no head officer");
+      
+                }
+            }
+            else if(RankcomboBox.getSelectedItem().toString().equals("Officer"))
+            {
+                rs = db.executeQuery("SELECT * FROM police_station"); 
+                while(rs.next())                  
+                {
+                    StationIDcomboBox.addItem(rs.getString("StationID"));
+                } 
+                lblRankError.setText("");
+            }
+        }
+        catch (SQLException ex)
+            {
+                Logger.getLogger(AddPoliceOfficer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    }//GEN-LAST:event_RankcomboBoxItemStateChanged
+
    
 
     void clearErrorLabels() {
         lblOfficerIDError.setText("");
-        lblOfficerIDError.setVisible(false);
         lblFnameError.setText("");
-        lblFnameError.setVisible(false);
         lblLnameError.setText("");
-        lblLnameError.setVisible(false);
         lblDateError.setText("");
-        lblDateError.setVisible(false);
-        lblRankError.setText("");
-        lblRankError.setVisible(false);
-
+        lblStationIDError.setText("");
     }
 
    
@@ -369,7 +409,6 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
         txtFname.setText("");
         txtLname.setText("");
         txtDate.setText("");
-        txtRank.setText("");
     }
 
 
@@ -377,6 +416,7 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
     private javax.swing.JLabel FirstNameLabel;
     private javax.swing.JLabel LnameLabel;
     private javax.swing.JLabel OfficerIDLabel;
+    private javax.swing.JComboBox<String> RankcomboBox;
     private javax.swing.JLabel StationIDLabel;
     private javax.swing.JComboBox<String> StationIDcomboBox;
     private javax.swing.JButton btnAddOfficer;
@@ -388,11 +428,11 @@ public class AddPoliceOfficer extends javax.swing.JFrame {
     private javax.swing.JLabel lblLnameError;
     private javax.swing.JLabel lblOfficerIDError;
     private javax.swing.JLabel lblRankError;
+    private javax.swing.JLabel lblStationIDError;
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtFname;
     private javax.swing.JTextField txtLname;
     private javax.swing.JTextField txtOfficerID;
-    private javax.swing.JTextField txtRank;
     // End of variables declaration//GEN-END:variables
 
 }

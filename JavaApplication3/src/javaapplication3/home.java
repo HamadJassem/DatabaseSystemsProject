@@ -34,11 +34,21 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(0, 204, 106));
+        
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(false);
         pnlCase.setVisible(false);
         pnlStatistics.setVisible(true);
+        
+        //set background color
+        pnlStation.setBackground(new Color(51,51,51));
+        pnlOfficer.setBackground(new Color(51,51,51));
+        pnlCriminal.setBackground(new Color(51,51,51));
+        pnlCrimes.setBackground(new Color(51,51,51));
+        pnlCase.setBackground(new Color(51,51,51));
+        pnlStatistics.setBackground(new Color(51,51,51));
+
     }
 
     /**
@@ -104,7 +114,7 @@ public class home extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1000, 600));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(149, 165, 166));
@@ -116,6 +126,7 @@ public class home extends javax.swing.JFrame {
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel3.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("John Smith");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -123,9 +134,11 @@ public class home extends javax.swing.JFrame {
         jLabel4.setText("Officer");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("#ID");
 
         btnOfficer.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnOfficer.setForeground(new java.awt.Color(255, 255, 255));
         btnOfficer.setText("Officer");
         btnOfficer.setBorder(null);
         btnOfficer.setContentAreaFilled(false);
@@ -140,6 +153,7 @@ public class home extends javax.swing.JFrame {
         });
 
         btnCriminal.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnCriminal.setForeground(new java.awt.Color(255, 255, 255));
         btnCriminal.setText("Criminal");
         btnCriminal.setBorder(null);
         btnCriminal.setContentAreaFilled(false);
@@ -151,6 +165,7 @@ public class home extends javax.swing.JFrame {
         });
 
         btnStation.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnStation.setForeground(new java.awt.Color(255, 255, 255));
         btnStation.setText("Station");
         btnStation.setBorder(null);
         btnStation.setContentAreaFilled(false);
@@ -170,6 +185,7 @@ public class home extends javax.swing.JFrame {
         });
 
         btnCase.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnCase.setForeground(new java.awt.Color(255, 255, 255));
         btnCase.setText("Case");
         btnCase.setBorder(null);
         btnCase.setContentAreaFilled(false);
@@ -196,6 +212,7 @@ public class home extends javax.swing.JFrame {
         lblCase.setOpaque(true);
 
         btnStatistics.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnStatistics.setForeground(new java.awt.Color(255, 255, 255));
         btnStatistics.setText("Statistics");
         btnStatistics.setBorder(null);
         btnStatistics.setContentAreaFilled(false);
@@ -213,6 +230,7 @@ public class home extends javax.swing.JFrame {
         lblStatistics.setOpaque(true);
 
         btnCrimes.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnCrimes.setForeground(new java.awt.Color(255, 255, 255));
         btnCrimes.setText("Crimes");
         btnCrimes.setBorder(null);
         btnCrimes.setContentAreaFilled(false);
@@ -315,7 +333,7 @@ public class home extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.CardLayout());
 
-        pnlStation.setBackground(new java.awt.Color(245, 245, 245));
+        pnlStation.setBackground(new java.awt.Color(51, 51, 51));
 
         btnAddStation.setBackground(new java.awt.Color(0, 204, 106));
         btnAddStation.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
@@ -357,9 +375,9 @@ public class home extends javax.swing.JFrame {
             .addGroup(pnlStationLayout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addComponent(btnAddStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDisplayStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addComponent(btnEditStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(336, Short.MAX_VALUE))
         );
@@ -677,7 +695,7 @@ public class home extends javax.swing.JFrame {
 
     private void btnOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOfficerActionPerformed
         // TODO add your handling code here:
-         lblStation.setBackground(new Color(255, 255, 255));
+        lblStation.setBackground(new Color(255, 255, 255));
         lblOfficer.setBackground(new Color(0, 204, 106));
         lblCriminal.setBackground(new Color(255, 255, 255));
         lblCrimes.setBackground(new Color(255, 255, 255));
@@ -724,12 +742,12 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCaseActionPerformed
 
     private void btnStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticsActionPerformed
-        // TODO add your handling code here:
+         //TODO add your handling code here:
         lblStation.setBackground(new Color(255, 255, 255));
-        lblOfficer.setBackground(new Color(255, 255, 255));
-        lblCriminal.setBackground(new Color(255, 255, 255));
-        lblCrimes.setBackground(new Color(255, 255, 255));
-        lblCase.setBackground(new Color(255, 255, 255));
+       lblOfficer.setBackground(new Color(255, 255, 255));
+       lblCriminal.setBackground(new Color(255, 255, 255));
+       lblCrimes.setBackground(new Color(255, 255, 255));
+       lblCase.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(0, 204, 106));
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
@@ -749,11 +767,15 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditCaseActionPerformed
 
     private void btnAddStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStationActionPerformed
-        (new AddPoliceStation(db)).setVisible(true);
+        try {
+            (new AddPoliceStation(db)).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAddStationActionPerformed
 
     private void btnEditStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditStationActionPerformed
-        //(new EditPoliceStation(db)).setVisible(true);
+        (new EditPoliceStation(db)).setVisible(true);
     }//GEN-LAST:event_btnEditStationActionPerformed
 
     private void btnDisplayStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayStationActionPerformed
@@ -785,11 +807,19 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDisplayCriminalActionPerformed
 
     private void btnAddCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCaseActionPerformed
-        //(new AddCases(db)).setVisible(true);
+        try {
+            (new AddCases(db)).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAddCaseActionPerformed
 
     private void btnDisplayCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayCaseActionPerformed
-        (new DisplayCases(db)).setVisible(true);
+        try {
+            (new DisplayCases(db)).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDisplayCaseActionPerformed
 
     private void btnCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrimesActionPerformed

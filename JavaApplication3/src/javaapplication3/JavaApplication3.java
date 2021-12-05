@@ -20,16 +20,13 @@ public class JavaApplication3 {
     public static void main(String[] args) {
         myDBCon db = null;
         try {
-            db = new myDBCon("b00082849", "b00082849");
+            db = new myDBCon("b00085157", "b00085157");
+            (new DisplayCriminal(db)).setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(JavaApplication3.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JavaApplication3.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-            (new DisplayCriminal(db)).setVisible(true);
-       
         
     }
     

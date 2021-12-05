@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 /**
  *
@@ -19,11 +20,12 @@ public class AddPoliceStation extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private myDBCon db;
-    public AddPoliceStation(myDBCon db) {
+    private ResultSet rs;
+    public AddPoliceStation(myDBCon db) throws SQLException {
         this.db = db;
         initComponents();
         clearErrorLabels();
-        //
+        resetLabels();
     }
 
     /**
@@ -36,8 +38,6 @@ public class AddPoliceStation extends javax.swing.JFrame {
     private void initComponents() {
 
         StationIDLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        HeadIDText = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
         StationIDLabel3 = new javax.swing.JLabel();
         StationIDLabel = new javax.swing.JLabel();
@@ -51,15 +51,14 @@ public class AddPoliceStation extends javax.swing.JFrame {
         AddressText = new javax.swing.JTextPane();
         AddressError = new javax.swing.JLabel();
         StationIDError = new javax.swing.JLabel();
-        HeadIDError = new javax.swing.JLabel();
         StateError = new javax.swing.JLabel();
+        HeadIDCmbBox = new javax.swing.JComboBox<>();
+        HeadIDError = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         StationIDLabel2.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        StationIDLabel2.setText("HeadID:");
-
-        jScrollPane3.setViewportView(HeadIDText);
+        StationIDLabel2.setText("Availabe HeadID:");
 
         jLabel1.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jLabel1.setText("Add Police Station");
@@ -95,13 +94,13 @@ public class AddPoliceStation extends javax.swing.JFrame {
         StationIDError.setForeground(new java.awt.Color(255, 0, 0));
         StationIDError.setText("ERROR LABEL");
 
-        HeadIDError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
-        HeadIDError.setForeground(new java.awt.Color(255, 0, 0));
-        HeadIDError.setText("ERROR LABEL");
-
         StateError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
         StateError.setForeground(new java.awt.Color(255, 0, 0));
         StateError.setText("ERROR LABEL");
+
+        HeadIDError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        HeadIDError.setForeground(new java.awt.Color(255, 0, 0));
+        HeadIDError.setText("ERROR LABEL");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,7 +124,8 @@ public class AddPoliceStation extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(StationIDLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(HeadIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(StationIDLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -134,12 +134,12 @@ public class AddPoliceStation extends javax.swing.JFrame {
                         .addComponent(StationIDLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(StationIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(AddressError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(HeadIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(StateError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(StateError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(HeadIDError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -158,16 +158,16 @@ public class AddPoliceStation extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddressError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StationIDLabel2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HeadIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(HeadIDError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(StationIDLabel3)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StateError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(AddStationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -186,31 +186,24 @@ public class AddPoliceStation extends javax.swing.JFrame {
     void clearErrorLabels()
     {
         StationIDError.setText("");
-        StationIDError.setVisible(false);
         AddressError.setText("");
-        AddressError.setVisible(false);
-        HeadIDError.setText("");
-        HeadIDError.setVisible(false);
         StateError.setText("");
-        StateError.setVisible(false);
+        HeadIDError.setText("");
     }
      
     boolean isValidData()
     {
         boolean flag = true;
-        clearErrorLabels();
         //check for station ID (empty, integer, and grater than 4)
         if(StationIDText.getText().trim().isEmpty() ||  !isInteger(StationIDText.getText().trim()))
         {
             if(StationIDText.getText().trim().isEmpty())
             {
                 StationIDError.setText("This field cannot be empty");
-                StationIDError.setVisible(true);
             }
             else if(!isInteger(StationIDText.getText().trim()))
             {
                 StationIDError.setText("This field must be integer");
-                StationIDError.setVisible(true);
             }
             
             flag = false;
@@ -218,7 +211,6 @@ public class AddPoliceStation extends javax.swing.JFrame {
         if(StationIDText.getText().trim().length() > 4)
         {
             StationIDError.setText("The length must be at most than 4 digits");
-            StationIDError.setVisible(true);
             flag = false;
         }
         
@@ -226,73 +218,70 @@ public class AddPoliceStation extends javax.swing.JFrame {
         if(AddressText.getText().trim().isEmpty())
         {
             AddressError.setText("This field cannot be empty");
-            AddressError.setVisible(true);
             flag = false;
         }
         if(AddressText.getText().trim().length() > 30)
         {
             AddressError.setText("The length must at most than 30 characters");
-            AddressError.setVisible(true);
             flag = false;
         }
         
-        //check for headID (empty, not integer, more than 4)
-        if(HeadIDText.getText().trim().isEmpty() || !isInteger(HeadIDText.getText().trim()))
+        //check for headID (empty)
+        if(HeadIDCmbBox.getItemCount() == 0)
         {
-            if(HeadIDText.getText().trim().isEmpty())
-            {
-                HeadIDError.setText("This field cannot be empty");
-                HeadIDError.setVisible(true);
-            }
-            else if(!isInteger(HeadIDText.getText().trim()))
-            {
-                HeadIDError.setText("This field must be integer");
-                HeadIDError.setVisible(true);
-            }
-            flag = false;
-        }
-        if(HeadIDText.getText().trim().length() > 4)
-        {
-            HeadIDError.setText("The length must be at most 4 digits");
-            HeadIDError.setVisible(true);
+            HeadIDError.setText("There are no head officers to be hired at the new station");
             flag = false;
         }
         
         //check for state (empty, greater than 30)
-        if(StateText.getText().trim().isEmpty())
+        if(StateText.getText().trim().isEmpty() || StateText.getText().trim().length() > 30 )
         {
+            if(StateText.getText().trim().isEmpty())
+            {
             StateError.setText("This field cannot be empty");
-            StateError.setVisible(true);
+            }
+            else if(StateText.getText().trim().length() > 30)
+            {
+            StateError.setText("The length must be at most 30 characters");            
+            }
             flag = false;
         }
-        if(StateText.getText().trim().length() > 30)
-        {
-            StateError.setText("The length must be at most 30 characters");
-            StateError.setVisible(true);
-            flag = false;
-        }
+
         
         return flag;
     }
     
+    void resetLabels() throws SQLException
+    {
+        rs = db.executeQuery("select * from Officer where rank = 'Captain' and OfficerID not in(select HeadID from police_station where officerID = headID) order by OfficerID ASC");
+        while(rs.next())
+        {
+            HeadIDCmbBox.addItem(rs.getString("officerID"));
+        }
+        StationIDText.setText("");
+        AddressText.setText("");
+        StateText.setText(""); 
+    }
+    
     private void AddStationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStationButtonActionPerformed
         //validate data
+        clearErrorLabels();
         if(isValidData())
         {
             try {
-                int result = db.executeUpdate("INSERT INTO police_station VALUES("
-                        + "'" + Integer.parseInt(StationIDText.getText()) + "',"
-                        + "'" + AddressText.getText().toUpperCase() + "',"
-                        + "'" + Integer.parseInt(HeadIDText.getText()) + "',"
-                        + "'" + StateText.getText().toUpperCase() + "'"
-                );
-                
+                this.db.setupPrepStatement("INSERT INTO police_station (StationID, Address, HeadID, State) values(?,?,?,?)");
+                this.db.getPrepStatement().setInt(1,Integer.parseInt(StationIDText.getText()));
+                this.db.getPrepStatement().setString(2,AddressText.getText());
+                this.db.getPrepStatement().setInt(3,Integer.parseInt(HeadIDCmbBox.getSelectedItem().toString()));
+                this.db.getPrepStatement().setString(4,StateText.getText());
+                int result = db.executePrepUpdate();
                 if(result > 0)
                 {
                    javax.swing.JLabel label = new javax.swing.JLabel("New Police Station added successfully.");
                     label.setFont(new java.awt.Font("Lucida Bright", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE); 
                 }
+                resetLabels();
             } catch (SQLException ex) {
                 Logger.getLogger(AddPoliceStation.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -310,8 +299,8 @@ public class AddPoliceStation extends javax.swing.JFrame {
     private javax.swing.JButton AddStationButton;
     private javax.swing.JLabel AddressError;
     private javax.swing.JTextPane AddressText;
+    private javax.swing.JComboBox<String> HeadIDCmbBox;
     private javax.swing.JLabel HeadIDError;
-    private javax.swing.JTextPane HeadIDText;
     private javax.swing.JLabel StateError;
     private javax.swing.JTextPane StateText;
     private javax.swing.JLabel StationIDError;
@@ -323,7 +312,6 @@ public class AddPoliceStation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

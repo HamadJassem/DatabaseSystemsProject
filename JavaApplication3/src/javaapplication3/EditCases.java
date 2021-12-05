@@ -20,6 +20,7 @@ public class EditCases extends javax.swing.JFrame {
     ResultSet rs;
     ResultSet ComboBoxes;
     String prevCaseID;
+    String prevCrimeID;
     String prevCriminalID;
     public EditCases(myDBCon db) throws SQLException
     {
@@ -65,8 +66,14 @@ public class EditCases extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         criminalIDSearch = new javax.swing.JTextPane();
         CriminalIDError = new javax.swing.JLabel();
+        CrimeIDError = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        crimieIDSearch = new javax.swing.JTextPane();
+        CaseIDLabel5 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        StationIDText = new javax.swing.JTextPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel5.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         jLabel5.setText("Edit Cases");
@@ -113,6 +120,12 @@ public class EditCases extends javax.swing.JFrame {
             }
         });
 
+        OfficerIDCmbBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                OfficerIDCmbBoxItemStateChanged(evt);
+            }
+        });
+
         caseIDSearch.setToolTipText("Enter Case ID");
         jScrollPane3.setViewportView(caseIDSearch);
 
@@ -134,62 +147,90 @@ public class EditCases extends javax.swing.JFrame {
         CriminalIDError.setForeground(new java.awt.Color(255, 0, 0));
         CriminalIDError.setText("ERROR LABEL");
 
+        CrimeIDError.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        CrimeIDError.setForeground(new java.awt.Color(255, 0, 0));
+        CrimeIDError.setText("ERROR LABEL");
+
+        crimieIDSearch.setToolTipText("Enter crimeID");
+        jScrollPane5.setViewportView(crimieIDSearch);
+
+        CaseIDLabel5.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        CaseIDLabel5.setText("Station ID:");
+
+        StationIDText.setEditable(false);
+        StationIDText.setBackground(new java.awt.Color(240, 240, 240));
+        jScrollPane6.setViewportView(StationIDText);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(CaseIDLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(CaseIDLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(OfficerIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(CaseIDLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(CrimeIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(hiredateLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(CaseIDLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(CriminalIDCmbBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(CaseIDLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DescriptionError, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                            .addComponent(CriminalIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(69, 69, 69))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CaseIDLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CaseIDLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(OfficerIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(hiredateLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(CaseIDLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(CriminalIDCmbBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(CaseIDLabel1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(DescriptionError, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                                            .addComponent(CriminalIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(59, 59, 59))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CaseIDLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(CrimeIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(CrimeIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(buttonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(CaseIDLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(265, 265, 265)
+                                .addComponent(jLabel5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(193, 193, 193)
+                                .addComponent(buttonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,8 +241,9 @@ public class EditCases extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SearchButton)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CaseIDLabel))
@@ -222,12 +264,17 @@ public class EditCases extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CaseIDLabel3)
-                    .addComponent(CrimeIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CrimeIDCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CrimeIDError))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hiredateLabel)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CaseIDLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,12 +289,14 @@ public class EditCases extends javax.swing.JFrame {
         boolean flag = true;
 
         //check that (caseID,criminalID) are not same from the rest of the tuples
-        if(prevCaseID == CaseIDText.getText() && prevCriminalID == CriminalIDCmbBox.getSelectedItem())
+        if(prevCaseID == CaseIDText.getText() && prevCriminalID == CriminalIDCmbBox.getSelectedItem() && prevCrimeID == CrimeIDCmbBox.getSelectedItem())
         {
-        rs = db.executeQuery("SELECT caseID, criminalID FROM case WHERE caseID = " + "'" + CaseIDText.getText() + "'" + "AND CriminalID = " + "'" + CriminalIDCmbBox.getSelectedItem() + "'");
+        rs = db.executeQuery("SELECT caseID, criminalID FROM case WHERE caseID = " + "'" + CaseIDText.getText() + "'" + "AND CriminalID = " + "'" + CriminalIDCmbBox.getSelectedItem() + "'" + "AND CrimeID = " + CrimeIDCmbBox.getSelectedItem());
         if(rs.next())
         {
-            CriminalIDError.setText("The set (Case ID, Criminal ID) already exist");
+            CriminalIDError.setText("The set (Case ID, Criminal ID, Crime ID) already exist");
+            CrimeIDError.setText("The set (Case ID, Criminal ID, Crime ID) already exist");
+            CrimeIDError.setVisible(true);
             CriminalIDError.setVisible(true);
             flag = false;
         }
@@ -274,8 +323,9 @@ public class EditCases extends javax.swing.JFrame {
     
     void disableErrorLabels()
     {
-        DescriptionError.setVisible(false);
-        CriminalIDError.setVisible(false);
+        DescriptionError.setText("");
+        CriminalIDError.setText("");
+        CrimeIDError.setText("");
     }
     
     void setComboBox() throws SQLException
@@ -373,16 +423,36 @@ public class EditCases extends javax.swing.JFrame {
                CrimeIDCmbBox.setSelectedItem(rs.getString("CrimeID"));
                OfficerIDCmbBox.setSelectedItem(rs.getString("OfficerID"));
                DateText.setText(rs.getString("recorded_date"));
+               StationIDText.setText("stationID");
                
                //store current case id in case any change 
                prevCaseID = rs.getString("caseID");
                prevCriminalID = rs.getString("criminalID");
+               prevCrimeID = rs.getString("CrimeID");
                db.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(EditCases.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_SearchButtonActionPerformed
+
+    private void OfficerIDCmbBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_OfficerIDCmbBoxItemStateChanged
+        try {
+            //if the officer ID changed, the police station will be set to that officer
+
+            rs = db.executeQuery("SELECT StationID FROM officer WHERE OfficerID = " + "'" + OfficerIDCmbBox.getSelectedItem() + "'");
+            
+            if(rs.next())
+            {
+                StationIDText.setText(rs.getString("StationID"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddCases.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }//GEN-LAST:event_OfficerIDCmbBoxItemStateChanged
    
 
 
@@ -392,8 +462,10 @@ public class EditCases extends javax.swing.JFrame {
     private javax.swing.JLabel CaseIDLabel2;
     private javax.swing.JLabel CaseIDLabel3;
     private javax.swing.JLabel CaseIDLabel4;
+    private javax.swing.JLabel CaseIDLabel5;
     private javax.swing.JTextPane CaseIDText;
     private javax.swing.JComboBox<String> CrimeIDCmbBox;
+    private javax.swing.JLabel CrimeIDError;
     private javax.swing.JComboBox<String> CriminalIDCmbBox;
     private javax.swing.JLabel CriminalIDError;
     private javax.swing.JTextPane DateText;
@@ -401,9 +473,11 @@ public class EditCases extends javax.swing.JFrame {
     private javax.swing.JTextPane DescriptionText;
     private javax.swing.JComboBox<String> OfficerIDCmbBox;
     private javax.swing.JButton SearchButton;
+    private javax.swing.JTextPane StationIDText;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonUpdate;
     private javax.swing.JTextPane caseIDSearch;
+    private javax.swing.JTextPane crimieIDSearch;
     private javax.swing.JTextPane criminalIDSearch;
     private javax.swing.JLabel hiredateLabel;
     private javax.swing.JLabel jLabel5;
@@ -411,6 +485,8 @@ public class EditCases extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     // End of variables declaration//GEN-END:variables
 }

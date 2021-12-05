@@ -44,30 +44,27 @@ public class DisplayCriminal extends javax.swing.JFrame {
     private void initComponents() {
 
         FnameLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        FnameText = new javax.swing.JTextPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        LnameText = new javax.swing.JTextPane();
         disaplyCriminalLabel = new javax.swing.JLabel();
         LnameLabel = new javax.swing.JLabel();
-        buttonPrev = new javax.swing.JButton();
-        buttonNext = new javax.swing.JButton();
         CriminalIDLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        CriminalIDText = new javax.swing.JTextPane();
         Picture = new javax.swing.JLabel();
+        LnameText = new javax.swing.JTextField();
+        FnameText = new javax.swing.JTextField();
+        CriminalIDText = new javax.swing.JTextField();
+        Weight = new javax.swing.JLabel();
+        WeightText = new javax.swing.JTextField();
+        LastNameLabel1 = new javax.swing.JLabel();
+        HeightText = new javax.swing.JTextField();
+        AgeLabel = new javax.swing.JLabel();
+        AgeText = new javax.swing.JTextField();
+        buttonNext = new javax.swing.JButton();
+        buttonPrev = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         FnameLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         FnameLabel.setText("First Name:");
-
-        FnameText.setEditable(false);
-        jScrollPane2.setViewportView(FnameText);
-
-        LnameText.setEditable(false);
-        jScrollPane3.setViewportView(LnameText);
 
         disaplyCriminalLabel.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
         disaplyCriminalLabel.setText("Criminal Display");
@@ -75,13 +72,45 @@ public class DisplayCriminal extends javax.swing.JFrame {
         LnameLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         LnameLabel.setText("Last Name:");
 
-        buttonPrev.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
-        buttonPrev.setText("<< PREV");
-        buttonPrev.addActionListener(new java.awt.event.ActionListener() {
+        CriminalIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        CriminalIDLabel.setText("Criminal ID:");
+
+        LnameText.setEditable(false);
+        LnameText.setBackground(new java.awt.Color(255, 255, 255));
+
+        FnameText.setEditable(false);
+        FnameText.setBackground(new java.awt.Color(255, 255, 255));
+
+        CriminalIDText.setEditable(false);
+        CriminalIDText.setBackground(new java.awt.Color(255, 255, 255));
+
+        Weight.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        Weight.setText("Weight:");
+
+        WeightText.setEditable(false);
+        WeightText.setBackground(new java.awt.Color(255, 255, 255));
+        WeightText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonPrevActionPerformed(evt);
+                WeightTextActionPerformed(evt);
             }
         });
+
+        LastNameLabel1.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        LastNameLabel1.setText("Height:");
+
+        HeightText.setEditable(false);
+        HeightText.setBackground(new java.awt.Color(255, 255, 255));
+        HeightText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HeightTextActionPerformed(evt);
+            }
+        });
+
+        AgeLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        AgeLabel.setText("Age:");
+
+        AgeText.setEditable(false);
+        AgeText.setBackground(new java.awt.Color(255, 255, 255));
 
         buttonNext.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
         buttonNext.setText("NEXT >>");
@@ -91,77 +120,106 @@ public class DisplayCriminal extends javax.swing.JFrame {
             }
         });
 
-        CriminalIDLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
-        CriminalIDLabel.setText("Criminal ID:");
-
-        CriminalIDText.setEditable(false);
-        jScrollPane1.setViewportView(CriminalIDText);
+        buttonPrev.setFont(new java.awt.Font("Lucida Bright", 0, 18)); // NOI18N
+        buttonPrev.setText("<< PREV");
+        buttonPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrevActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(51, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(40, 40, 40)
                                 .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(CriminalIDLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(FnameLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(LnameLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(LnameText))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(FnameLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(FnameText))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CriminalIDLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(CriminalIDText, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(LastNameLabel1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(HeightText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(AgeLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(AgeText))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(Weight)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(WeightText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(151, 151, 151)
-                                .addComponent(disaplyCriminalLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(113, 113, 113)
-                                .addComponent(buttonPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(buttonNext, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(162, 162, 162)
+                                .addComponent(disaplyCriminalLabel)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(buttonPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(buttonNext, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(disaplyCriminalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CriminalIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CriminalIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(FnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FnameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(LnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonPrev, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 22, Short.MAX_VALUE))
+                            .addComponent(LnameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(AgeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AgeLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Weight)
+                            .addComponent(WeightText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LastNameLabel1)
+                            .addComponent(HeightText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(Picture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonNext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -170,7 +228,7 @@ public class DisplayCriminal extends javax.swing.JFrame {
 
         try {
             String str;
-            rs = db.executeQuery("SELECT criminalID, fname, lname, picture from criminal ORDER BY criminalID ASC");
+            rs = db.executeQuery("SELECT * from criminal ORDER BY criminalID ASC");
             // populate rest of fields
             rs.beforeFirst();
             rs.first();
@@ -186,93 +244,87 @@ public class DisplayCriminal extends javax.swing.JFrame {
             CriminalIDText.setText(rs.getString("criminalID"));
             FnameText.setText(rs.getString("fname"));
             LnameText.setText(rs.getString("lname"));
-            new Thread(new Runnable()
+            AgeText.setText(rs.getString("age"));
+            WeightText.setText(rs.getString("weight"));
+            HeightText.setText(rs.getString("height"));
+            if(rs.getBlob("picture") != null)
             {
-                public void run()
-                {
+                File pic = new File("current.png");
+                try {
+                    FileOutputStream output = new FileOutputStream(pic);
+                    InputStream input = rs.getBinaryStream("picture");
+                    byte buffer[] = new byte[1024];
                     try {
-                        if(rs.getBlob("picture") != null)
+                        while(input.read(buffer)>0)
                         {
-                            File pic = new File("current.png");
-                            try {
-                                FileOutputStream output = new FileOutputStream(pic);
-                                InputStream input = rs.getBinaryStream("picture");
-                                byte buffer[] = new byte[1024];
-                                try {
-                                    while(input.read(buffer)>0)
-                                    {
-                                        output.write(buffer);
-                                    }
-                                    String path = pic.getAbsolutePath();
-                                    ImageIcon myimg = new ImageIcon(path);
-                                    Image img = myimg.getImage();
-                                    Image newImg= img.getScaledInstance(Picture.getWidth(), Picture.getHeight(), Image.SCALE_SMOOTH);
-                                    ImageIcon finalImage = new ImageIcon(newImg);
-                                    Picture.setIcon(finalImage);
-                                    
-                                } catch (IOException ex) {
-                                    Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            } catch (FileNotFoundException ex) {
-                                Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            
+                            output.write(buffer);
                         }
-                        else
-                        {
-                            Picture.setIcon(null);
-                        }       } catch (SQLException ex) {
+                        String path = pic.getAbsolutePath();
+                        ImageIcon myimg = new ImageIcon(path);
+                        Image img = myimg.getImage();
+                        Image newImg= img.getScaledInstance(Picture.getWidth(), Picture.getHeight(), Image.SCALE_SMOOTH);
+                        ImageIcon finalImage = new ImageIcon(newImg);
+                        Picture.setIcon(finalImage);
+                        
+                    } catch (IOException ex) {
                         Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }).start();
+            }
+            else
+            {
+                Picture.setIcon(null);
+            }
             
-
             EnableDisableButtons();
         } catch (SQLException ex) {
             Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void buttonPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrevActionPerformed
-        try {
-            // TODO add your handling code here:
+    private void WeightTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeightTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_WeightTextActionPerformed
 
-            if (!rs.isFirst()) {
-                rs.previous();
-                populateFields();
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonPrevActionPerformed
+    private void HeightTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HeightTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HeightTextActionPerformed
 
     private void buttonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNextActionPerformed
-         try {
-            // TODO add your handling code here:
-
+        try {
             if (!rs.isLast()) {
 
                 rs.next();
                 populateFields();
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonNextActionPerformed
+
+    private void buttonPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrevActionPerformed
+        try {
+            if (!rs.isFirst()) {
+                rs.previous();
+                populateFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonPrevActionPerformed
     private void EnableDisableButtons()
-    {
+    {      
         try {
             if (rs.isFirst()) {
-                buttonPrev.setEnabled(false);
+                buttonPrev.setVisible(false);
             } else {
-                buttonPrev.setEnabled(true);
+                buttonPrev.setVisible(true);
             }
             if (rs.isLast()) {
-                buttonNext.setEnabled(false);
+                buttonNext.setVisible(false);
             } else {
-                buttonNext.setEnabled(true);
+                buttonNext.setVisible(true);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
@@ -282,19 +334,22 @@ public class DisplayCriminal extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AgeLabel;
+    private javax.swing.JTextField AgeText;
     private javax.swing.JLabel CriminalIDLabel;
-    private javax.swing.JTextPane CriminalIDText;
+    private javax.swing.JTextField CriminalIDText;
     private javax.swing.JLabel FnameLabel;
-    private javax.swing.JTextPane FnameText;
+    private javax.swing.JTextField FnameText;
+    private javax.swing.JTextField HeightText;
+    private javax.swing.JLabel LastNameLabel1;
     private javax.swing.JLabel LnameLabel;
-    private javax.swing.JTextPane LnameText;
+    private javax.swing.JTextField LnameText;
     private javax.swing.JLabel Picture;
+    private javax.swing.JLabel Weight;
+    private javax.swing.JTextField WeightText;
     private javax.swing.JButton buttonNext;
     private javax.swing.JButton buttonPrev;
     private javax.swing.JLabel disaplyCriminalLabel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

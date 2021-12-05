@@ -15,9 +15,9 @@ public class myDBCon {
     private String DBURL;
     private String DBUSER;
     private String DBPASS;
-    private Connection con;
-    private Statement statement;
-    private PreparedStatement prep;
+    Connection con;
+    Statement statement;
+    PreparedStatement prep;
    
     //define constructor of myDBCon where username and password needs to be passed to the constructor
     public myDBCon(String u, String p) throws SQLException, ClassNotFoundException

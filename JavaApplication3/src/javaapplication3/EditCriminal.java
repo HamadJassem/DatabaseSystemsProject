@@ -30,6 +30,10 @@ public class EditCriminal extends javax.swing.JFrame {
         this.db = db;
         initComponents();
         clearErrorLabels();
+        for(int i = 1; i <= 99; i++)
+        {
+            AgeCmbBox.addItem(""+i);
+        }
     }
 
     /**
@@ -61,9 +65,17 @@ public class EditCriminal extends javax.swing.JFrame {
         Reset = new javax.swing.JButton();
         lbCriminalIDError = new javax.swing.JLabel();
         lblFnameError = new javax.swing.JLabel();
+        HeightError = new javax.swing.JLabel();
+        Weight = new javax.swing.JLabel();
+        WeightText = new javax.swing.JTextField();
+        LastNameLabel1 = new javax.swing.JLabel();
+        AgeCmbBox = new javax.swing.JComboBox<>();
+        HeightText = new javax.swing.JTextField();
+        AgeLabel = new javax.swing.JLabel();
         lblLnameError = new javax.swing.JLabel();
+        WeightError = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jScrollPane4.setViewportView(FirstNameText);
 
@@ -135,9 +147,38 @@ public class EditCriminal extends javax.swing.JFrame {
         lblFnameError.setForeground(new java.awt.Color(255, 0, 0));
         lblFnameError.setText("error label");
 
+        HeightError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        HeightError.setForeground(new java.awt.Color(255, 0, 0));
+        HeightError.setText("error label");
+
+        Weight.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        Weight.setText("Weight:");
+
+        WeightText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WeightTextActionPerformed(evt);
+            }
+        });
+
+        LastNameLabel1.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        LastNameLabel1.setText("Height:");
+
+        HeightText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HeightTextActionPerformed(evt);
+            }
+        });
+
+        AgeLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
+        AgeLabel.setText("Age:");
+
         lblLnameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblLnameError.setForeground(new java.awt.Color(255, 0, 0));
         lblLnameError.setText("error label");
+
+        WeightError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        WeightError.setForeground(new java.awt.Color(255, 0, 0));
+        WeightError.setText("error label");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,12 +191,6 @@ public class EditCriminal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(153, 153, 153)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -176,30 +211,55 @@ public class EditCriminal extends javax.swing.JFrame {
                                         .addComponent(CriminalIDLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbCriminalIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
-                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(lblLnameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(lblFnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                            .addComponent(lblLnameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(162, 162, 162))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(Reset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(SelectPicture, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(SelectPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(LastNameLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(HeightText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(Weight)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(WeightText, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(AgeLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(AgeCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(WeightError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(HeightError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(EditCriminalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -212,29 +272,45 @@ public class EditCriminal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(FirstNameLabel)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbCriminalIDError)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblFnameError)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLnameError)
+                    .addComponent(LastNameLabel)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AgeLabel)
+                    .addComponent(AgeCmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Weight)
+                    .addComponent(WeightText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(WeightError))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LastNameLabel1)
+                            .addComponent(HeightText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LastNameLabel)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(SelectPicture)
-                            .addComponent(jLabel1)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(lbCriminalIDError)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(lblFnameError)
-                            .addGap(37, 37, 37))
-                        .addComponent(lblLnameError, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addGap(27, 27, 27)
-                .addComponent(Reset)
-                .addGap(15, 15, 15)
-                .addComponent(UpdateButton)
-                .addGap(25, 25, 25)
-                .addComponent(DeleteButton)
-                .addContainerGap())
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addComponent(Reset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DeleteButton)
+                            .addComponent(UpdateButton))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(HeightError)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -247,22 +323,28 @@ public class EditCriminal extends javax.swing.JFrame {
             if (isValidData()) {
                 if(this.selectedFile == null)
                 {
-                    this.db.setupPrepStatement("UPDATE criminal SET fname = ?, lname = ? WHERE criminalID = ?");
+                    this.db.setupPrepStatement("UPDATE criminal SET fname = ?, lname = ?, weight = ?, height = ?, age = ? WHERE criminalID = ?");
                     this.db.getPrepStatement().setString(1, FirstNameText.getText().toUpperCase());
-                    this.db.getPrepStatement().setString(2, LastNameText.getText().toUpperCase());
-                    this.db.getPrepStatement().setString(3, CriminalIDText.getText());
+                    this.db.getPrepStatement().setString(2, LastNameText.getText().toUpperCase());                    
+                    this.db.getPrepStatement().setInt(3,Integer.parseInt(WeightText.getText()));
+                    this.db.getPrepStatement().setString(4, HeightText.getText());
+                    this.db.getPrepStatement().setInt(5,Integer.parseInt(AgeCmbBox.getSelectedItem().toString()));
+                    this.db.getPrepStatement().setString(6, CriminalIDText.getText());
                 }
                 else
                 {
-                    this.db.setupPrepStatement("UPDATE criminal SET fname = ?, lname = ?, picture = ? WHERE criminalID = ?");
+                    this.db.setupPrepStatement("UPDATE criminal SET fname = ?, lname = ?, , weight = ?, height = ?, age = ?, picture = ? WHERE criminalID = ?");
                     this.db.getPrepStatement().setString(1, FirstNameText.getText().toUpperCase());
                     this.db.getPrepStatement().setString(2, LastNameText.getText().toUpperCase());
+                    this.db.getPrepStatement().setInt(3,Integer.parseInt(WeightText.getText()));
+                    this.db.getPrepStatement().setString(4, HeightText.getText());
+                    this.db.getPrepStatement().setInt(5,Integer.parseInt(AgeCmbBox.getSelectedItem().toString()));
                     try {
-                        this.db.getPrepStatement().setBlob(3, new FileInputStream(this.selectedFile));
+                        this.db.getPrepStatement().setBlob(6, new FileInputStream(this.selectedFile));
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(EditCriminal.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    this.db.getPrepStatement().setString(4, CriminalIDText.getText());
+                    this.db.getPrepStatement().setString(7, CriminalIDText.getText());
                 }
                 
                 
@@ -270,9 +352,10 @@ public class EditCriminal extends javax.swing.JFrame {
                 
                 int res = this.db.executePrepUpdate();
                 if (res > 0) {
-                    javax.swing.JLabel label = new javax.swing.JLabel("New user added successfully.");
+                    javax.swing.JLabel label = new javax.swing.JLabel("crimnial updated successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    resetLabels();
                 }
             
             } else {
@@ -299,6 +382,7 @@ public class EditCriminal extends javax.swing.JFrame {
                 label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                 JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
+                resetLabels();
             }
 
 
@@ -316,6 +400,9 @@ public class EditCriminal extends javax.swing.JFrame {
                CriminalIDText.setText(rs.getString("criminalID"));
                FirstNameText.setText(rs.getString("fname"));
                LastNameText.setText(rs.getString("lname"));
+               AgeCmbBox.setSelectedItem(rs.getString("age"));
+               WeightText.setText(rs.getString("weight"));
+               HeightText.setText(rs.getString("height"));
                db.close();
             }
         } catch (SQLException ex) {
@@ -326,12 +413,21 @@ public class EditCriminal extends javax.swing.JFrame {
     
     void clearErrorLabels() {
         lbCriminalIDError.setText("");
-        lbCriminalIDError.setVisible(false);
         lblFnameError.setText("");
-        lblFnameError.setVisible(false);
+        HeightError.setText("");
+        WeightError.setText("");
         lblLnameError.setText("");
-        lblLnameError.setVisible(false);
 
+    }
+    
+    void resetLabels()
+    {
+        CriminalIDText.setText("");
+        FirstNameText.setText("");
+        LastNameText.setText("");
+        WeightText.setText("");
+        HeightText.setText("");
+        SearchText.setText("");
     }
     boolean isValidData() {
         boolean result = true;
@@ -341,9 +437,9 @@ public class EditCriminal extends javax.swing.JFrame {
 
         if (CriminalIDText.getText().trim().isEmpty() || (CriminalIDText.getText().trim().length() > 4)) {
             if (CriminalIDText.getText().trim().isEmpty()) {
-                lblFnameError.setText("Invalid. Cannot be empty.");
+                lbCriminalIDError.setText("Invalid. Cannot be empty.");
             } else if ((CriminalIDText.getText().trim().length() > 4)) {
-                lblFnameError.setText("Invalid. cannot exceed 4 chars.");
+                lbCriminalIDError.setText("Invalid. cannot exceed 4 chars.");
             }
 
             lbCriminalIDError.setVisible(true);
@@ -375,6 +471,34 @@ public class EditCriminal extends javax.swing.JFrame {
             lblLnameError.setVisible(true);
             result = false;
         }
+        
+        if(HeightText.getText().trim().isEmpty() ||  HeightText.getText().length() > 7)
+        {
+            if(HeightText.getText().trim().isEmpty())
+            {
+                HeightError.setText("Invalid. Cannot be empty");
+            }
+            else if(HeightText.getText().length() > 3)
+            {
+                HeightError.setText("Invalid. Length cannot exceed 3 digits and 3 decimal points");
+            }
+            
+            result = false;
+        }
+        
+        if(WeightText.getText().trim().isEmpty() || WeightText.getText().length() > 8)
+        {
+            if(WeightText.getText().trim().isEmpty())
+            {
+                WeightError.setText("Invalid. Cannot be empty");
+            }
+            else if(WeightText.getText().length() > 3)
+            {
+                WeightError.setText("Invalid. Length cannot exceed 4 digits and 3 decimal points");
+            }
+            
+            result = false;
+        }
 
         return result;
     }
@@ -402,21 +526,37 @@ public class EditCriminal extends javax.swing.JFrame {
        jLabel1.setText("No Picture Selected");
     }//GEN-LAST:event_ResetActionPerformed
 
+    private void WeightTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeightTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_WeightTextActionPerformed
+
+    private void HeightTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HeightTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HeightTextActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> AgeCmbBox;
+    private javax.swing.JLabel AgeLabel;
     private javax.swing.JLabel CriminalIDLabel;
     private javax.swing.JTextPane CriminalIDText;
     private javax.swing.JButton DeleteButton;
     private javax.swing.JLabel EditCriminalInfoLabel;
     private javax.swing.JLabel FirstNameLabel;
     private javax.swing.JTextPane FirstNameText;
+    private javax.swing.JLabel HeightError;
+    private javax.swing.JTextField HeightText;
     private javax.swing.JLabel LastNameLabel;
+    private javax.swing.JLabel LastNameLabel1;
     private javax.swing.JTextPane LastNameText;
     private javax.swing.JButton Reset;
     private javax.swing.JTextPane SearchText;
     private javax.swing.JButton SelectPicture;
     private javax.swing.JButton UpdateButton;
+    private javax.swing.JLabel Weight;
+    private javax.swing.JLabel WeightError;
+    private javax.swing.JTextField WeightText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
