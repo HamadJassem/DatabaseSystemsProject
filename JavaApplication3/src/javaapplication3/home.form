@@ -463,9 +463,11 @@
                       <Component id="btnAddStation" min="-2" pref="191" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnDisplayStation" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnEditStation" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace pref="336" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnSearchStation" min="-2" pref="191" max="-2" attributes="0"/>
+                      <EmptySpace pref="127" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -477,6 +479,7 @@
                           <Component id="btnAddStation" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnEditStation" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnDisplayStation" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnSearchStation" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="311" max="32767" attributes="0"/>
                   </Group>
@@ -565,6 +568,33 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDisplayStationActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnSearchStation">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="6a" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Berlin Sans FB" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Search Station"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder>
+                      <Color PropertyName="highlightOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="highlightInner" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowInner" blue="6a" green="cc" red="0" type="rgb"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchStationActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlOfficer">
@@ -589,7 +619,9 @@
                       <Component id="btnDisplayOfficer" min="-2" pref="191" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEditOfficer" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace pref="336" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSearchOfficer" min="-2" pref="191" max="-2" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -601,6 +633,7 @@
                           <Component id="btnAddOfficer" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnEditOfficer" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnDisplayOfficer" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnSearchOfficer" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="311" max="32767" attributes="0"/>
                   </Group>
@@ -689,6 +722,33 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDisplayOfficerActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnSearchOfficer">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="6a" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Berlin Sans FB" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Search Officer"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder>
+                      <Color PropertyName="highlightOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="highlightInner" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowInner" blue="6a" green="cc" red="0" type="rgb"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchOfficerActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlCriminal">
@@ -713,7 +773,9 @@
                       <Component id="btnDisplayCriminal" min="-2" pref="191" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEditCriminal" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace pref="336" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSearchCriminal" min="-2" pref="191" max="-2" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -725,6 +787,7 @@
                           <Component id="btnAddCriminal" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnEditCriminal" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnDisplayCriminal" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnSearchCriminal" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="311" max="32767" attributes="0"/>
                   </Group>
@@ -813,6 +876,33 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDisplayCriminalActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnSearchCriminal">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="6a" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Berlin Sans FB" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Search Criminal"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder>
+                      <Color PropertyName="highlightOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="highlightInner" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowInner" blue="6a" green="cc" red="0" type="rgb"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchCriminalActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlCrimes">
@@ -837,7 +927,9 @@
                       <Component id="btnDisplayCrimes" min="-2" pref="191" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEditCrimes" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace pref="336" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSearchCrimes" min="-2" pref="191" max="-2" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -849,6 +941,7 @@
                           <Component id="btnAddCrimes" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnEditCrimes" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnDisplayCrimes" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnSearchCrimes" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="311" max="32767" attributes="0"/>
                   </Group>
@@ -937,6 +1030,33 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDisplayCrimesActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnSearchCrimes">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="6a" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Berlin Sans FB" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Search Crimes"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder>
+                      <Color PropertyName="highlightOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="highlightInner" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowInner" blue="6a" green="cc" red="0" type="rgb"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchCrimesActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlCase">
@@ -961,7 +1081,9 @@
                       <Component id="btnDisplayCase" min="-2" pref="191" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEditCase" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace pref="336" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSearchCase" min="-2" pref="191" max="-2" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -973,6 +1095,7 @@
                           <Component id="btnAddCase" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnEditCase" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnDisplayCase" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnSearchCase" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="311" max="32767" attributes="0"/>
                   </Group>
@@ -1059,6 +1182,33 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDisplayCaseActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSearchCase">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="6a" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Berlin Sans FB" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Search Case"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder>
+                      <Color PropertyName="highlightOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="highlightInner" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowOuter" blue="6a" green="cc" red="0" type="rgb"/>
+                      <Color PropertyName="shadowInner" blue="6a" green="cc" red="0" type="rgb"/>
+                    </BevelBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchCaseActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

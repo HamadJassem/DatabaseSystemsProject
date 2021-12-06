@@ -93,22 +93,27 @@ public class home extends javax.swing.JFrame {
         btnAddStation = new javax.swing.JButton();
         btnEditStation = new javax.swing.JButton();
         btnDisplayStation = new javax.swing.JButton();
+        btnSearchStation = new javax.swing.JButton();
         pnlOfficer = new javax.swing.JPanel();
         btnAddOfficer = new javax.swing.JButton();
         btnEditOfficer = new javax.swing.JButton();
         btnDisplayOfficer = new javax.swing.JButton();
+        btnSearchOfficer = new javax.swing.JButton();
         pnlCriminal = new javax.swing.JPanel();
         btnAddCriminal = new javax.swing.JButton();
         btnEditCriminal = new javax.swing.JButton();
         btnDisplayCriminal = new javax.swing.JButton();
+        btnSearchCriminal = new javax.swing.JButton();
         pnlCrimes = new javax.swing.JPanel();
         btnAddCrimes = new javax.swing.JButton();
         btnEditCrimes = new javax.swing.JButton();
         btnDisplayCrimes = new javax.swing.JButton();
+        btnSearchCrimes = new javax.swing.JButton();
         pnlCase = new javax.swing.JPanel();
         btnAddCase = new javax.swing.JButton();
         btnEditCase = new javax.swing.JButton();
         btnDisplayCase = new javax.swing.JButton();
+        btnSearchCase = new javax.swing.JButton();
         pnlStatistics = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -368,6 +373,17 @@ public class home extends javax.swing.JFrame {
             }
         });
 
+        btnSearchStation.setBackground(new java.awt.Color(0, 204, 106));
+        btnSearchStation.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnSearchStation.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchStation.setText("Search Station");
+        btnSearchStation.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnSearchStation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchStationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlStationLayout = new javax.swing.GroupLayout(pnlStation);
         pnlStation.setLayout(pnlStationLayout);
         pnlStationLayout.setHorizontalGroup(
@@ -377,9 +393,11 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnAddStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDisplayStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEditStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSearchStation, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         pnlStationLayout.setVerticalGroup(
             pnlStationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +406,8 @@ public class home extends javax.swing.JFrame {
                 .addGroup(pnlStationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDisplayStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisplayStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(311, Short.MAX_VALUE))
         );
 
@@ -429,6 +448,17 @@ public class home extends javax.swing.JFrame {
             }
         });
 
+        btnSearchOfficer.setBackground(new java.awt.Color(0, 204, 106));
+        btnSearchOfficer.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnSearchOfficer.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchOfficer.setText("Search Officer");
+        btnSearchOfficer.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnSearchOfficer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchOfficerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlOfficerLayout = new javax.swing.GroupLayout(pnlOfficer);
         pnlOfficer.setLayout(pnlOfficerLayout);
         pnlOfficerLayout.setHorizontalGroup(
@@ -440,7 +470,9 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnDisplayOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearchOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         pnlOfficerLayout.setVerticalGroup(
             pnlOfficerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,7 +481,8 @@ public class home extends javax.swing.JFrame {
                 .addGroup(pnlOfficerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDisplayOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisplayOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(311, Short.MAX_VALUE))
         );
 
@@ -490,6 +523,17 @@ public class home extends javax.swing.JFrame {
             }
         });
 
+        btnSearchCriminal.setBackground(new java.awt.Color(0, 204, 106));
+        btnSearchCriminal.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnSearchCriminal.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchCriminal.setText("Search Criminal");
+        btnSearchCriminal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnSearchCriminal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchCriminalActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCriminalLayout = new javax.swing.GroupLayout(pnlCriminal);
         pnlCriminal.setLayout(pnlCriminalLayout);
         pnlCriminalLayout.setHorizontalGroup(
@@ -501,7 +545,9 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnDisplayCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearchCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         pnlCriminalLayout.setVerticalGroup(
             pnlCriminalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,7 +556,8 @@ public class home extends javax.swing.JFrame {
                 .addGroup(pnlCriminalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDisplayCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisplayCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(311, Short.MAX_VALUE))
         );
 
@@ -551,6 +598,17 @@ public class home extends javax.swing.JFrame {
             }
         });
 
+        btnSearchCrimes.setBackground(new java.awt.Color(0, 204, 106));
+        btnSearchCrimes.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnSearchCrimes.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchCrimes.setText("Search Crimes");
+        btnSearchCrimes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnSearchCrimes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchCrimesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCrimesLayout = new javax.swing.GroupLayout(pnlCrimes);
         pnlCrimes.setLayout(pnlCrimesLayout);
         pnlCrimesLayout.setHorizontalGroup(
@@ -562,7 +620,9 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnDisplayCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearchCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         pnlCrimesLayout.setVerticalGroup(
             pnlCrimesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,7 +631,8 @@ public class home extends javax.swing.JFrame {
                 .addGroup(pnlCrimesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDisplayCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisplayCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(311, Short.MAX_VALUE))
         );
 
@@ -612,6 +673,17 @@ public class home extends javax.swing.JFrame {
             }
         });
 
+        btnSearchCase.setBackground(new java.awt.Color(0, 204, 106));
+        btnSearchCase.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnSearchCase.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchCase.setText("Search Case");
+        btnSearchCase.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnSearchCase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchCaseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCaseLayout = new javax.swing.GroupLayout(pnlCase);
         pnlCase.setLayout(pnlCaseLayout);
         pnlCaseLayout.setHorizontalGroup(
@@ -623,7 +695,9 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnDisplayCase, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditCase, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearchCase, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         pnlCaseLayout.setVerticalGroup(
             pnlCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,7 +706,8 @@ public class home extends javax.swing.JFrame {
                 .addGroup(pnlCaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDisplayCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisplayCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(311, Short.MAX_VALUE))
         );
 
@@ -850,6 +925,26 @@ public class home extends javax.swing.JFrame {
         (new DisplayCrimes(db)).setVisible(true);
     }//GEN-LAST:event_btnDisplayCrimesActionPerformed
 
+    private void btnSearchStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchStationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchStationActionPerformed
+
+    private void btnSearchOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchOfficerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchOfficerActionPerformed
+
+    private void btnSearchCriminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCriminalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchCriminalActionPerformed
+
+    private void btnSearchCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCrimesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchCrimesActionPerformed
+
+    private void btnSearchCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCaseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchCaseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -905,6 +1000,11 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton btnEditOfficer;
     private javax.swing.JButton btnEditStation;
     private javax.swing.JButton btnOfficer;
+    private javax.swing.JButton btnSearchCase;
+    private javax.swing.JButton btnSearchCrimes;
+    private javax.swing.JButton btnSearchCriminal;
+    private javax.swing.JButton btnSearchOfficer;
+    private javax.swing.JButton btnSearchStation;
     private javax.swing.JButton btnStation;
     private javax.swing.JButton btnStatistics;
     private javax.swing.JLabel jLabel1;
