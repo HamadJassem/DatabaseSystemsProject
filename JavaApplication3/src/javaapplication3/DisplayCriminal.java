@@ -265,11 +265,11 @@ public class DisplayCriminal extends javax.swing.JFrame {
                     
                     FileOutputStream output = new FileOutputStream(pic);
                     InputStream input = null;
-                            try {
-                                input = rs.getBinaryStream("picture");
-                            } catch (SQLException ex) {
-                                Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                    try {
+                        input = rs.getBinaryStream("picture");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     byte buffer[] = new byte[1024];
                     try {
                         while(input.read(buffer)>0)

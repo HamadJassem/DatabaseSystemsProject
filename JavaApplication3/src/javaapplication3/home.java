@@ -719,11 +719,11 @@ public class home extends javax.swing.JFrame {
         pnlStatistics.setLayout(pnlStatisticsLayout);
         pnlStatisticsLayout.setHorizontalGroup(
             pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 1014, Short.MAX_VALUE)
         );
         pnlStatisticsLayout.setVerticalGroup(
             pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGap(0, 442, Short.MAX_VALUE)
         );
 
         jPanel2.add(pnlStatistics, "card4");
@@ -866,7 +866,7 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditOfficerActionPerformed
 
     private void btnDisplayOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayOfficerActionPerformed
-        (new DisplayPoliceOfficer(db)).setVisible(true);
+        (new DisplayPoliceOfficer(db, null)).setVisible(true);
     }//GEN-LAST:event_btnDisplayOfficerActionPerformed
 
     private void btnAddCriminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCriminalActionPerformed
@@ -930,16 +930,16 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchStationActionPerformed
 
     private void btnSearchOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchOfficerActionPerformed
-        // TODO add your handling code here:
+       new SearchOfficer(db).setVisible(true);
     }//GEN-LAST:event_btnSearchOfficerActionPerformed
 
     private void btnSearchCriminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCriminalActionPerformed
         // TODO add your handling code here:
-        new SearchCriminal(db).setVisible(true);
+       new SearchCriminal(db).setVisible(true);
     }//GEN-LAST:event_btnSearchCriminalActionPerformed
 
     private void btnSearchCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCrimesActionPerformed
-        // TODO add your handling code here:
+       
         
     }//GEN-LAST:event_btnSearchCrimesActionPerformed
 

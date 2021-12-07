@@ -28,8 +28,10 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
      */
     private myDBCon db;
     ResultSet rs;
-    public DisplayPoliceOfficer(myDBCon db) {
+    String SQL;
+    public DisplayPoliceOfficer(myDBCon db, String SQL) {
         this.db = db;
+        this.SQL = SQL;
         initComponents();
         getNewData();
     }
@@ -212,7 +214,9 @@ public class DisplayPoliceOfficer extends javax.swing.JFrame {
     private void getNewData()
     {
         try {
-            rs = db.executeQuery("SELECT officerID, fname, lname, hiredate, rank, stationID FROM officer ORDER BY officerID ASC ");
+            
+            if(SQL == null) rs = db.executeQuery("SELECT officerID, fname, lname, hiredate, rank, stationID FROM officer ORDER BY officerID ASC ");
+            else rs = db.executeQuery(SQL);
             rs.beforeFirst();
             rs.first();
             populateFields();
