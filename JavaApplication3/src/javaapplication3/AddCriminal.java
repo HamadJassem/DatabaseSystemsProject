@@ -376,7 +376,6 @@ public class AddCriminal extends javax.swing.JFrame {
                     this.db.getPrepStatement().setInt(4,Integer.parseInt(AgeCmbBox.getSelectedItem().toString()));
                     this.db.getPrepStatement().setInt(5,Integer.parseInt(WeightText.getText()));
                     this.db.getPrepStatement().setInt(6,Integer.parseInt(HeightText.getText()));
-                    this.db.getPrepStatement().setInt(WIDTH, WIDTH);
                     if(this.selectedFile != null)
                     {
                         try {

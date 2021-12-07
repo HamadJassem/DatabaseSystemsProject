@@ -4,7 +4,14 @@
  */
 package javaapplication3;
 
-
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static javax.swing.UIManager.getInt;
 /**
  *
  * @author Ali
@@ -14,10 +21,22 @@ public class LoginForm extends javax.swing.JFrame {
     /**
      * Creates new form LoginForm
      */
-    public LoginForm() {
+    private myDBCon db;
+    ResultSet rs;
+    boolean validLogin = false;
+    public LoginForm(myDBCon db) {
         initComponents();
+        this.db = db;
+        try{
+            rs = db.executeQuery("SELECT userid, password, type FROM loginusers ORDER BY userid");
+        } catch(SQLException ex){
+            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Retreiving usename/password.");
+            label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+            JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
         
     }
+
     
 
     /**
@@ -41,7 +60,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
@@ -103,31 +122,31 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel5.setText("Sign in to continue");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField1.setText("Enter Username....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtUsername.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsername.setText("Enter Username....");
+        txtUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField1FocusGained(evt);
+                txtUsernameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
+                txtUsernameFocusLost(evt);
             }
         });
-        jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+        txtUsername.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTextField1InputMethodTextChanged(evt);
+                txtUsernameInputMethodTextChanged(evt);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtUsernameActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 320, 30));
+        jPanel2.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 320, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel6.setText("Password:");
@@ -163,33 +182,75 @@ public class LoginForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+                try {                                         
+            //rs.beforeFirst();
+            MessageDigest md = null;
+            
+            try {
+                md = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            byte[] messageDigest = md.digest(jPasswordField1.getText().getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            //search for the userid and password from the table depending on the user input
+            rs = db.executeQuery("SELECT * FROM loginusers WHERE userid = " + "'" + txtUsername.getText() + "'" + "AND password = " + "'" +hashtext + "'");
+            
+            if (rs.next()) {
+                    validLogin = true;
+                    //store information about the user (username,type, officerid)
+                    loginusers user = new loginusers(rs.getString("userid"), rs.getInt("type"));
+                    (new home(user, db)).setVisible(true);                  
+                    this.dispose();
+            }
+
+            if (!validLogin) { //sends error message if the user inputs invalid credentials 
+                javax.swing.JLabel label = new javax.swing.JLabel("Wrong username/password.");
+                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+                txtUsername.setText("");
+                jPasswordField1.setText("");
+            }
+            
+            
+        } catch (SQLException ex) {
+            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - " + ex.getMessage());
+            label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+            JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField1InputMethodTextChanged
+    private void txtUsernameInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtUsernameInputMethodTextChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1InputMethodTextChanged
+    }//GEN-LAST:event_txtUsernameInputMethodTextChanged
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+    private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
         // TODO add your handling code here:
-        if(jTextField1.getText().isEmpty())
+        if(txtUsername.getText().isEmpty())
         {
-            jTextField1.setText("Enter Username....");
+            txtUsername.setText("Enter Username....");
         }
-    }//GEN-LAST:event_jTextField1FocusLost
+    }//GEN-LAST:event_txtUsernameFocusLost
 
-    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+    private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
         // TODO add your handling code here:
-        if(jTextField1.getText().equals("Enter Username...."))
+        if(txtUsername.getText().equals("Enter Username...."))
         {
-            jTextField1.setText("");
+            txtUsername.setText("");
         }
-    }//GEN-LAST:event_jTextField1FocusGained
+    }//GEN-LAST:event_txtUsernameFocusGained
 
     private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
         // TODO add your handling code here:
@@ -228,6 +289,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

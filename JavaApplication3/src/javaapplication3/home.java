@@ -21,11 +21,73 @@ public class home extends javax.swing.JFrame {
      */
     
     private myDBCon db;
-    
-    public home(myDBCon db) {
+    private loginusers user;
+    private int type;
+    ResultSet rs;
+    public home(loginusers user, myDBCon db) throws SQLException {
         initComponents();
         clearSelections();
         this.db = db;
+        this.user = user;
+        type = user.getType();
+        //admins
+        if(type == 1){
+            jLabel1.setText("You are login as an admin");
+            jLabel3.setText("Welcome, " + user.getUserID());
+            jLabel4.setText("");
+            jLabel6.setText("");
+        }
+        //heads
+        else if(type == 2){
+            rs = db.executeQuery("SELECT fname, lname, officerID FROM officer WHERE officerID = " + "'" + user.getUserID() + "'");
+            rs.next();
+            jLabel1.setText("You are login as a head");
+            jLabel3.setText("Welcome, " + rs.getString("fname")+ " " + rs.getString("lname"));
+            jLabel6.setText(rs.getString("officerID"));
+            lblUsers.setVisible(false);
+            btnUsers.setVisible(false);
+            btnAddCrimes.setVisible(false);
+            btnEditCrimes.setVisible(false);
+            btnAddOfficer.setVisible(false);
+            btnAddStation.setVisible(false);
+            btnEditStation.setVisible(false);
+        }
+        //officers
+        else if(type == 3){
+            rs = db.executeQuery("SELECT fname, lname, officerID FROM officer WHERE officerID = " + "'" + user.getUserID() + "'");
+            rs.next();
+            jLabel1.setText("You are login as an officer");
+            jLabel3.setText("Welcome, " + rs.getString("fname")+ " " + rs.getString("lname"));
+            jLabel6.setText(rs.getString("officerID"));
+            lblUsers.setVisible(false);
+            btnUsers.setVisible(false);
+            btnAddCrimes.setVisible(false);
+            btnEditCrimes.setVisible(false);
+            btnAddOfficer.setVisible(false);
+            btnEditOfficer.setVisible(false);
+            btnAddStation.setVisible(false);
+            btnEditStation.setVisible(false);
+        }
+        //normal users
+        else if(type == 4){
+            jLabel1.setText("You are login as a user");
+            jLabel3.setText("Welcome, " + user.getUserID());
+            jLabel4.setText("");
+            jLabel6.setText("");
+            lblUsers.setVisible(false);
+            btnUsers.setVisible(false);
+            btnAddCase.setVisible(false);
+            btnEditCase.setVisible(false);
+            btnAddCrimes.setVisible(false);
+            btnEditCrimes.setVisible(false);
+            btnAddCriminal.setVisible(false);
+            btnEditCriminal.setVisible(false);
+            btnAddOfficer.setVisible(false);
+            btnEditOfficer.setVisible(false);
+            btnAddStation.setVisible(false);
+            btnEditStation.setVisible(false);
+        }
+
         
         //default statistics
         lblStation.setBackground(new Color(255, 255, 255));
@@ -33,12 +95,15 @@ public class home extends javax.swing.JFrame {
         lblCriminal.setBackground(new Color(255, 255, 255));
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(0, 204, 106));
         
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(false);
         pnlCase.setVisible(false);
+        pnlCrimes.setVisible(false);
+        pnlUsers.setVisible(false);
         pnlStatistics.setVisible(true);
         
         //set background color
@@ -48,6 +113,7 @@ public class home extends javax.swing.JFrame {
         pnlCrimes.setBackground(new Color(51,51,51));
         pnlCase.setBackground(new Color(51,51,51));
         pnlStatistics.setBackground(new Color(51,51,51));
+        pnlUsers.setBackground(new Color(51,51,51));
 
     }
 
@@ -63,6 +129,7 @@ public class home extends javax.swing.JFrame {
         lblCriminal.setBackground(new Color(255, 255, 255));
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(255, 255, 255));
     }
     
@@ -84,10 +151,12 @@ public class home extends javax.swing.JFrame {
         lblCriminal = new javax.swing.JLabel();
         lblOfficer = new javax.swing.JLabel();
         lblCase = new javax.swing.JLabel();
-        btnStatistics = new javax.swing.JButton();
-        lblStatistics = new javax.swing.JLabel();
+        btnUsers = new javax.swing.JButton();
+        lblUsers = new javax.swing.JLabel();
         btnCrimes = new javax.swing.JButton();
         lblCrimes = new javax.swing.JLabel();
+        btnStatistics = new javax.swing.JButton();
+        lblStatistics = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         pnlStation = new javax.swing.JPanel();
         btnAddStation = new javax.swing.JButton();
@@ -115,6 +184,7 @@ public class home extends javax.swing.JFrame {
         btnDisplayCase = new javax.swing.JButton();
         btnSearchCase = new javax.swing.JButton();
         pnlStatistics = new javax.swing.JPanel();
+        pnlUsers = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1000, 600));
@@ -129,6 +199,11 @@ public class home extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(52, 152, 219));
         jLabel2.setText("Logout?");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,23 +291,23 @@ public class home extends javax.swing.JFrame {
         lblCase.setBackground(new java.awt.Color(0, 204, 106));
         lblCase.setOpaque(true);
 
-        btnStatistics.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
-        btnStatistics.setForeground(new java.awt.Color(255, 255, 255));
-        btnStatistics.setText("Statistics");
-        btnStatistics.setBorder(null);
-        btnStatistics.setContentAreaFilled(false);
-        btnStatistics.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnStatistics.setMaximumSize(new java.awt.Dimension(87, 25));
-        btnStatistics.setMinimumSize(new java.awt.Dimension(87, 25));
-        btnStatistics.setPreferredSize(new java.awt.Dimension(87, 25));
-        btnStatistics.addActionListener(new java.awt.event.ActionListener() {
+        btnUsers.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnUsers.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsers.setText("Users");
+        btnUsers.setBorder(null);
+        btnUsers.setContentAreaFilled(false);
+        btnUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsers.setMaximumSize(new java.awt.Dimension(87, 25));
+        btnUsers.setMinimumSize(new java.awt.Dimension(87, 25));
+        btnUsers.setPreferredSize(new java.awt.Dimension(87, 25));
+        btnUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStatisticsActionPerformed(evt);
+                btnUsersActionPerformed(evt);
             }
         });
 
-        lblStatistics.setBackground(new java.awt.Color(0, 204, 106));
-        lblStatistics.setOpaque(true);
+        lblUsers.setBackground(new java.awt.Color(0, 204, 106));
+        lblUsers.setOpaque(true);
 
         btnCrimes.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
         btnCrimes.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,17 +327,44 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new java.awt.Color(0, 204, 106));
         lblCrimes.setOpaque(true);
 
+        btnStatistics.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
+        btnStatistics.setForeground(new java.awt.Color(255, 255, 255));
+        btnStatistics.setText("Statistics");
+        btnStatistics.setBorder(null);
+        btnStatistics.setContentAreaFilled(false);
+        btnStatistics.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnStatistics.setMaximumSize(new java.awt.Dimension(87, 25));
+        btnStatistics.setMinimumSize(new java.awt.Dimension(87, 25));
+        btnStatistics.setPreferredSize(new java.awt.Dimension(87, 25));
+        btnStatistics.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatisticsActionPerformed(evt);
+            }
+        });
+
+        lblStatistics.setBackground(new java.awt.Color(0, 204, 106));
+        lblStatistics.setOpaque(true);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addGap(19, 19, 19))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel6))
+                    .addComponent(jLabel3))
+                .addContainerGap(844, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(135, 135, 135)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -277,7 +379,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnCriminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCrimes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCrimes, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(lblCrimes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -285,18 +387,13 @@ public class home extends javax.swing.JFrame {
                     .addComponent(lblCase, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
                     .addComponent(lblStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(315, 315, 315))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel6))
-                    .addComponent(jLabel3))
-                .addGap(406, 406, 406))
+                    .addComponent(btnUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(lblUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(206, 206, 206))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,20 +411,23 @@ public class home extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnCriminal)
                                     .addComponent(btnOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnStation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnCase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(11, 11, 11)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
-                                    .addComponent(lblCase, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
-                                    .addComponent(lblCriminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
+                                        .addComponent(lblCase, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
+                                        .addComponent(lblCriminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -408,7 +508,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnEditStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDisplayStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlStation, "card4");
@@ -483,7 +583,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnEditOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDisplayOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchOfficer, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlOfficer, "card4");
@@ -558,7 +658,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnEditCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDisplayCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchCriminal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlCriminal, "card4");
@@ -633,7 +733,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnEditCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDisplayCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlCrimes, "card4");
@@ -708,7 +808,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnEditCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDisplayCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchCase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlCase, "card4");
@@ -723,10 +823,25 @@ public class home extends javax.swing.JFrame {
         );
         pnlStatisticsLayout.setVerticalGroup(
             pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
+            .addGap(0, 456, Short.MAX_VALUE)
         );
 
         jPanel2.add(pnlStatistics, "card4");
+
+        pnlUsers.setBackground(new java.awt.Color(245, 245, 245));
+
+        javax.swing.GroupLayout pnlUsersLayout = new javax.swing.GroupLayout(pnlUsers);
+        pnlUsers.setLayout(pnlUsersLayout);
+        pnlUsersLayout.setHorizontalGroup(
+            pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        pnlUsersLayout.setVerticalGroup(
+            pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 456, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(pnlUsers, "card4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -756,12 +871,14 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         pnlStation.setVisible(true);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(false);
         pnlCrimes.setVisible(false);
         pnlCase.setVisible(false);
         pnlStatistics.setVisible(false);
+        pnlUsers.setVisible(false);
     }//GEN-LAST:event_btnStationActionPerformed
 
     private void btnStationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStationMouseClicked
@@ -776,12 +893,14 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(true);
         pnlCriminal.setVisible(false);
         pnlCrimes.setVisible(false);
         pnlCase.setVisible(false);
         pnlStatistics.setVisible(false);
+        pnlUsers.setVisible(false);
     }//GEN-LAST:event_btnOfficerActionPerformed
 
     private void btnCriminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriminalActionPerformed
@@ -792,12 +911,14 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(true);
         pnlCrimes.setVisible(false);
         pnlCase.setVisible(false);
         pnlStatistics.setVisible(false);
+        pnlUsers.setVisible(false);
     }//GEN-LAST:event_btnCriminalActionPerformed
 
     private void btnCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaseActionPerformed
@@ -808,30 +929,34 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new Color(255, 255, 255));
         lblCase.setBackground(new Color(0, 204, 106));
         lblStatistics.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(false);
         pnlCrimes.setVisible(false);
         pnlCase.setVisible(true);
         pnlStatistics.setVisible(false);
+        pnlUsers.setVisible(false);
     }//GEN-LAST:event_btnCaseActionPerformed
 
-    private void btnStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticsActionPerformed
+    private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
          //TODO add your handling code here:
         lblStation.setBackground(new Color(255, 255, 255));
-       lblOfficer.setBackground(new Color(255, 255, 255));
-       lblCriminal.setBackground(new Color(255, 255, 255));
-       lblCrimes.setBackground(new Color(255, 255, 255));
-       lblCase.setBackground(new Color(255, 255, 255));
-        lblStatistics.setBackground(new Color(0, 204, 106));
+        lblOfficer.setBackground(new Color(255, 255, 255));
+        lblCriminal.setBackground(new Color(255, 255, 255));
+        lblCrimes.setBackground(new Color(255, 255, 255));
+        lblCase.setBackground(new Color(255, 255, 255));
+        lblStatistics.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(0, 204, 106));
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(false);
         pnlCrimes.setVisible(false);
         pnlCase.setVisible(false);
-        pnlStatistics.setVisible(true);
+        pnlStatistics.setVisible(false);
+        pnlUsers.setVisible(true);
         
-    }//GEN-LAST:event_btnStatisticsActionPerformed
+    }//GEN-LAST:event_btnUsersActionPerformed
 
     private void btnEditCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCaseActionPerformed
         try {
@@ -904,12 +1029,14 @@ public class home extends javax.swing.JFrame {
         lblCrimes.setBackground(new Color(0, 204, 106));
         lblCase.setBackground(new Color(255, 255, 255));
         lblStatistics.setBackground(new Color(255, 255, 255));
+        lblUsers.setBackground(new Color(255, 255, 255));
         pnlStation.setVisible(false);
         pnlOfficer.setVisible(false);
         pnlCriminal.setVisible(false);
         pnlCrimes.setVisible(true);
         pnlCase.setVisible(false);
         pnlStatistics.setVisible(false);
+        pnlUsers.setVisible(false);
         
     }//GEN-LAST:event_btnCrimesActionPerformed
 
@@ -948,6 +1075,31 @@ public class home extends javax.swing.JFrame {
         // TODO add your handling code here:
         (new SearchCases(db)).setVisible(true);
     }//GEN-LAST:event_btnSearchCaseActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        (new LoginForm(db)).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void btnStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticsActionPerformed
+        // TODO add your handling code here:
+        lblStation.setBackground(new Color(255, 255, 255));
+        lblOfficer.setBackground(new Color(255, 255, 255));
+        lblCriminal.setBackground(new Color(255, 255, 255));
+        lblCrimes.setBackground(new Color(255, 255, 255));
+        lblCase.setBackground(new Color(255, 255, 255));
+        lblStatistics.setBackground(new Color(0,204, 106));
+        lblUsers.setBackground(new Color(255, 255, 255));
+        pnlStation.setVisible(false);
+        pnlOfficer.setVisible(false);
+        pnlCriminal.setVisible(false);
+        pnlCrimes.setVisible(false);
+        pnlCase.setVisible(false);
+        pnlUsers.setVisible(false);
+        pnlStatistics.setVisible(true);
+        
+    }//GEN-LAST:event_btnStatisticsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1011,6 +1163,7 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton btnSearchStation;
     private javax.swing.JButton btnStation;
     private javax.swing.JButton btnStatistics;
+    private javax.swing.JButton btnUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1024,11 +1177,13 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JLabel lblOfficer;
     private javax.swing.JLabel lblStation;
     private javax.swing.JLabel lblStatistics;
+    private javax.swing.JLabel lblUsers;
     private javax.swing.JPanel pnlCase;
     private javax.swing.JPanel pnlCrimes;
     private javax.swing.JPanel pnlCriminal;
     private javax.swing.JPanel pnlOfficer;
     private javax.swing.JPanel pnlStation;
     private javax.swing.JPanel pnlStatistics;
+    private javax.swing.JPanel pnlUsers;
     // End of variables declaration//GEN-END:variables
 }
