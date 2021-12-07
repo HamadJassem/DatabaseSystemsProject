@@ -408,7 +408,7 @@ public class home extends javax.swing.JFrame {
                     .addComponent(btnEditStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDisplayStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchStation, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(308, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlStation, "card4");
@@ -914,11 +914,11 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrimesActionPerformed
 
     private void btnAddCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCrimesActionPerformed
-        // TODO add your handling code here:
+        (new AddCrime(db)).setVisible(true);
     }//GEN-LAST:event_btnAddCrimesActionPerformed
 
     private void btnEditCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCrimesActionPerformed
-        // TODO add your handling code here:
+        (new EditCrime(db)).setVisible(true);
     }//GEN-LAST:event_btnEditCrimesActionPerformed
 
     private void btnDisplayCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayCrimesActionPerformed
