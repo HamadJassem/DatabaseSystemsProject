@@ -26,12 +26,15 @@ public class DisplayCriminal extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+    String SQ;
     private myDBCon db;
     ResultSet rs;
-    public DisplayCriminal(myDBCon db) {
+    public DisplayCriminal(myDBCon db, String SQL) {
         this.db = db;
+        this.SQ = SQL;
         initComponents();
         getNewData();
+       
     }
 
     /**
@@ -228,7 +231,10 @@ public class DisplayCriminal extends javax.swing.JFrame {
 
         try {
             String str;
-            rs = db.executeQuery("SELECT * from criminal ORDER BY criminalID ASC");
+            System.out.println(SQ);
+            if(SQ != null) {rs = db.executeQuery(SQ);}            
+            else {rs = db.executeQuery("SELECT * from criminal ORDER BY criminalID ASC");}
+            
             // populate rest of fields
             rs.beforeFirst();
             rs.first();
@@ -249,10 +255,21 @@ public class DisplayCriminal extends javax.swing.JFrame {
             HeightText.setText(rs.getString("height"));
             if(rs.getBlob("picture") != null)
             {
-                File pic = new File("current.png");
+                new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        File pic = new File("current.png");
                 try {
+                    
                     FileOutputStream output = new FileOutputStream(pic);
-                    InputStream input = rs.getBinaryStream("picture");
+                    InputStream input = null;
+                            try {
+                                input = rs.getBinaryStream("picture");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                     byte buffer[] = new byte[1024];
                     try {
                         while(input.read(buffer)>0)
@@ -272,6 +289,9 @@ public class DisplayCriminal extends javax.swing.JFrame {
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(DisplayCriminal.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                    }
+                }).start();
+                
             }
             else
             {

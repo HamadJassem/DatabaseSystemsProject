@@ -237,6 +237,12 @@ public class AddCriminal extends javax.swing.JFrame {
         AgeLabel.setFont(new java.awt.Font("Lucida Bright", 0, 14)); // NOI18N
         AgeLabel.setText("Age:");
 
+        AgeCmbBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgeCmbBoxActionPerformed(evt);
+            }
+        });
+
         FNameError.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -367,18 +373,21 @@ public class AddCriminal extends javax.swing.JFrame {
                     this.db.getPrepStatement().setInt(1, Integer.parseInt(CriminalIDText.getText()));
                     this.db.getPrepStatement().setString(2, FirstNameText.getText());
                     this.db.getPrepStatement().setString(3, LastNameText.getText());
+                    this.db.getPrepStatement().setInt(4,Integer.parseInt(AgeCmbBox.getSelectedItem().toString()));
+                    this.db.getPrepStatement().setInt(5,Integer.parseInt(WeightText.getText()));
+                    this.db.getPrepStatement().setInt(6,Integer.parseInt(HeightText.getText()));
                     this.db.getPrepStatement().setInt(WIDTH, WIDTH);
                     if(this.selectedFile != null)
                     {
                         try {
-                            this.db.getPrepStatement().setBlob(6, new FileInputStream(this.selectedFile));
+                            this.db.getPrepStatement().setBlob(7, new FileInputStream(this.selectedFile));
                         } catch (FileNotFoundException ex) {
                             Logger.getLogger(AddCriminal.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     else
                     {
-                        this.db.getPrepStatement().setNull(6, java.sql.Types.NULL);
+                        this.db.getPrepStatement().setNull(7, java.sql.Types.NULL);
                     }
                     int res = this.db.executePrepUpdate();
                     if (res > 0) {
@@ -428,6 +437,10 @@ public class AddCriminal extends javax.swing.JFrame {
     private void HeightTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HeightTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HeightTextActionPerformed
+
+    private void AgeCmbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgeCmbBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AgeCmbBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

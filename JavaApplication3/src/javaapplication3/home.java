@@ -878,7 +878,7 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditCriminalActionPerformed
 
     private void btnDisplayCriminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayCriminalActionPerformed
-        (new DisplayCriminal(db)).setVisible(true);
+        (new DisplayCriminal(db, null)).setVisible(true);
     }//GEN-LAST:event_btnDisplayCriminalActionPerformed
 
     private void btnAddCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCaseActionPerformed
@@ -935,10 +935,12 @@ public class home extends javax.swing.JFrame {
 
     private void btnSearchCriminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCriminalActionPerformed
         // TODO add your handling code here:
+        new SearchCriminal(db).setVisible(true);
     }//GEN-LAST:event_btnSearchCriminalActionPerformed
 
     private void btnSearchCrimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCrimesActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnSearchCrimesActionPerformed
 
     private void btnSearchCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCaseActionPerformed
