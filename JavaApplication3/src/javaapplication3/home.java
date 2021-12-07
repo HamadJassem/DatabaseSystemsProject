@@ -854,7 +854,7 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditStationActionPerformed
 
     private void btnDisplayStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayStationActionPerformed
-        (new DisplayPoliceStation(db)).setVisible(true);
+        (new DisplayPoliceStation(db, null)).setVisible(true);
     }//GEN-LAST:event_btnDisplayStationActionPerformed
 
     private void btnAddOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOfficerActionPerformed
@@ -891,7 +891,7 @@ public class home extends javax.swing.JFrame {
 
     private void btnDisplayCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayCaseActionPerformed
         try {
-            (new DisplayCases(db)).setVisible(true);
+            (new DisplayCases(db, null)).setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -927,6 +927,7 @@ public class home extends javax.swing.JFrame {
 
     private void btnSearchStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchStationActionPerformed
         // TODO add your handling code here:
+        (new SearchPoliceStation(db)).setVisible(true);
     }//GEN-LAST:event_btnSearchStationActionPerformed
 
     private void btnSearchOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchOfficerActionPerformed
@@ -945,6 +946,7 @@ public class home extends javax.swing.JFrame {
 
     private void btnSearchCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCaseActionPerformed
         // TODO add your handling code here:
+        (new SearchCases(db)).setVisible(true);
     }//GEN-LAST:event_btnSearchCaseActionPerformed
 
     /**
