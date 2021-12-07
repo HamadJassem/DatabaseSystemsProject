@@ -185,6 +185,10 @@ public class home extends javax.swing.JFrame {
         btnSearchCase = new javax.swing.JButton();
         pnlStatistics = new javax.swing.JPanel();
         pnlUsers = new javax.swing.JPanel();
+        btnAddUser = new javax.swing.JButton();
+        btnEditUser = new javax.swing.JButton();
+        btnDisplayUser = new javax.swing.JButton();
+        btnSearchUser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1000, 600));
@@ -423,11 +427,10 @@ public class home extends javax.swing.JFrame {
                                 .addGap(11, 11, 11)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(lblUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
-                                        .addComponent(lblCase, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
-                                        .addComponent(lblCriminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(lblUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
+                                    .addComponent(lblCase, javax.swing.GroupLayout.DEFAULT_SIZE, 5, Short.MAX_VALUE)
+                                    .addComponent(lblCriminal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblStation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblCrimes, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -830,15 +833,75 @@ public class home extends javax.swing.JFrame {
 
         pnlUsers.setBackground(new java.awt.Color(245, 245, 245));
 
+        btnAddUser.setBackground(new java.awt.Color(0, 204, 106));
+        btnAddUser.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddUser.setText("Add User");
+        btnAddUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUserActionPerformed(evt);
+            }
+        });
+
+        btnEditUser.setBackground(new java.awt.Color(0, 204, 106));
+        btnEditUser.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnEditUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditUser.setText("Edit User");
+        btnEditUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnEditUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditUserActionPerformed(evt);
+            }
+        });
+
+        btnDisplayUser.setBackground(new java.awt.Color(0, 204, 106));
+        btnDisplayUser.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnDisplayUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnDisplayUser.setText("Display User");
+        btnDisplayUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnDisplayUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisplayUserActionPerformed(evt);
+            }
+        });
+
+        btnSearchUser.setBackground(new java.awt.Color(0, 204, 106));
+        btnSearchUser.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        btnSearchUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchUser.setText("Search User");
+        btnSearchUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106), new java.awt.Color(0, 204, 106)));
+        btnSearchUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchUserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlUsersLayout = new javax.swing.GroupLayout(pnlUsers);
         pnlUsers.setLayout(pnlUsersLayout);
         pnlUsersLayout.setHorizontalGroup(
             pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(pnlUsersLayout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDisplayUser, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditUser, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         pnlUsersLayout.setVerticalGroup(
             pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 456, Short.MAX_VALUE)
+            .addGroup(pnlUsersLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditUser, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDisplayUser, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
 
         jPanel2.add(pnlUsers, "card4");
@@ -1101,6 +1164,22 @@ public class home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnStatisticsActionPerformed
 
+    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void btnEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditUserActionPerformed
+
+    private void btnDisplayUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDisplayUserActionPerformed
+
+    private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchUserActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1142,6 +1221,7 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton btnAddCriminal;
     private javax.swing.JButton btnAddOfficer;
     private javax.swing.JButton btnAddStation;
+    private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnCase;
     private javax.swing.JButton btnCrimes;
     private javax.swing.JButton btnCriminal;
@@ -1150,17 +1230,20 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton btnDisplayCriminal;
     private javax.swing.JButton btnDisplayOfficer;
     private javax.swing.JButton btnDisplayStation;
+    private javax.swing.JButton btnDisplayUser;
     private javax.swing.JButton btnEditCase;
     private javax.swing.JButton btnEditCrimes;
     private javax.swing.JButton btnEditCriminal;
     private javax.swing.JButton btnEditOfficer;
     private javax.swing.JButton btnEditStation;
+    private javax.swing.JButton btnEditUser;
     private javax.swing.JButton btnOfficer;
     private javax.swing.JButton btnSearchCase;
     private javax.swing.JButton btnSearchCrimes;
     private javax.swing.JButton btnSearchCriminal;
     private javax.swing.JButton btnSearchOfficer;
     private javax.swing.JButton btnSearchStation;
+    private javax.swing.JButton btnSearchUser;
     private javax.swing.JButton btnStation;
     private javax.swing.JButton btnStatistics;
     private javax.swing.JButton btnUsers;
