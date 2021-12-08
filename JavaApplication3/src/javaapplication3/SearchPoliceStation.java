@@ -206,27 +206,41 @@ public class SearchPoliceStation extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String SQL = "SELECT police_station.stationid as IDSTATION, address, headid, state, fname, lname, hiredate, rank FROM police_station inner join officer on headid = officerid WHERE address = '" + jTextField1.getText().trim() + "'" + " ORDER BY police_station.stationID ASC";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField1.getText().trim().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            JOptionPane.showMessageDialog(null, "Address Is Empty");
         }
         else
         {
-            new DisplayPoliceStation(db, SQL).setVisible(true);
+            String SQL = "SELECT police_station.stationid as IDSTATION, address, headid, state, fname, lname, hiredate, rank FROM police_station inner join officer on headid = officerid WHERE address = '" + jTextField1.getText().trim().toUpperCase() + "'" + " ORDER BY police_station.stationID ASC";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayPoliceStation(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(jTextField2.getText().isEmpty() || jTextField2.getText().length()>4 || !Validation.isInteger(jTextField2.getText().trim()) || Integer.valueOf(jTextField2.getText())<0)
+        {
+            if(jTextField2.getText().isEmpty()) JOptionPane.showMessageDialog(null, "Please Type A number");
+            else if(jTextField2.getText().length()>4) JOptionPane.showMessageDialog(null, "Head ID must be 4 digits");
+            else if(!Validation.isInteger(jTextField2.getText().trim())) JOptionPane.showMessageDialog(null, "please type an integer");
+            else JOptionPane.showMessageDialog(null, "Head ID cannot be negative");
+        }
         String SQL = "SELECT police_station.stationid as IDSTATION, address, headid, state, fname, lname, hiredate, rank FROM police_station inner join officer on headid = officerid WHERE headid = '" + jTextField2.getText().trim() + "'" + " ORDER BY police_station.stationID ASC";
         int size = 0;
         try {
@@ -249,24 +263,31 @@ public class SearchPoliceStation extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String SQL = "SELECT police_station.stationid as IDSTATION, address, headid, state, fname, lname, hiredate, rank FROM police_station inner join officer on headid = officerid WHERE state = '" + jTextField4.getText().trim() + "'" + " ORDER BY police_station.stationID ASC";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField4.getText().trim().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            JOptionPane.showMessageDialog(null, "State Is Empty");
         }
         else
         {
-            new DisplayPoliceStation(db, SQL).setVisible(true);
+            String SQL = "SELECT police_station.stationid as IDSTATION, address, headid, state, fname, lname, hiredate, rank FROM police_station inner join officer on headid = officerid WHERE state = '" + jTextField4.getText().trim().toUpperCase() + "'" + " ORDER BY police_station.stationID ASC";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayPoliceStation(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

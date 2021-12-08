@@ -71,7 +71,7 @@
                       </Group>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="844" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnCrimes" alignment="0" pref="103" max="32767" attributes="0"/>
+                      <Component id="btnCrimes" alignment="0" max="32767" attributes="0"/>
                       <Component id="lblCrimes" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -101,12 +101,12 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnStatistics" pref="101" max="32767" attributes="0"/>
+                      <Component id="btnStatistics" max="32767" attributes="0"/>
                       <Component id="lblStatistics" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnUsers" pref="103" max="32767" attributes="0"/>
+                      <Component id="btnUsers" max="32767" attributes="0"/>
                       <Component id="lblUsers" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="206" max="-2" attributes="0"/>
@@ -1324,7 +1324,7 @@
                           <Component id="btnDisplayUser" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnSearchUser" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="340" max="32767" attributes="0"/>
+                      <EmptySpace pref="354" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

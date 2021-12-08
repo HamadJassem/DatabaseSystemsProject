@@ -262,71 +262,99 @@ public class SearchOfficer extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String SQL = "SELECT * FROM OFFICER WHERE FNAME = '" + (new String(jTextField1.getText().trim())).toUpperCase() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField1.getText().trim().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+           JOptionPane.showMessageDialog(null, "Please Type First Name");
         }
         else
         {
-            new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM OFFICER WHERE FNAME = '" + (new String(jTextField1.getText().trim().toUpperCase())) + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String SQL = "SELECT * FROM OFFICER WHERE LNAME = '" + (new String(jTextField2.getText().trim())).toUpperCase() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField2.getText().trim().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+           JOptionPane.showMessageDialog(null, "Please Type Last Name");
         }
         else
         {
-            new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM OFFICER WHERE LNAME = '" + (new String(jTextField2.getText().trim().toUpperCase())) + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String SQL = "SELECT * FROM OFFICER WHERE RANK = '" + (new String(jTextField4.getText().trim())).toUpperCase() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField4.getText().trim().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+           JOptionPane.showMessageDialog(null, "Please Type a Rank");
         }
         else
         {
-            new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM OFFICER WHERE RANK = '" + (new String(jTextField4.getText().trim()).toUpperCase()) + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+         if(jTextField5.getText().isEmpty() || jTextField5.getText().length()>4 || !Validation.isInteger(jTextField5.getText().trim()) || Integer.valueOf(jTextField5.getText())<0)
+        {
+            if(jTextField5.getText().isEmpty()) JOptionPane.showMessageDialog(null, "Please Type A number");
+            else if(jTextField5.getText().length()>4) JOptionPane.showMessageDialog(null, "Station ID must be 4 digits");
+            else if(!Validation.isInteger(jTextField5.getText().trim())) JOptionPane.showMessageDialog(null, "please type an integer");
+            else JOptionPane.showMessageDialog(null, "Station ID cannot be negative");
+        }
         String SQL = "SELECT * FROM OFFICER WHERE stationid = '" + jTextField5.getText().trim() + "'";
         int size = 0;
         try {

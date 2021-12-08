@@ -194,7 +194,7 @@ public class AddCrime extends javax.swing.JFrame {
             {
                 db.setupPrepStatement("INSERT INTO crime (CrimeID, Name, Category) VALUES (?,?,?)");
                 db.getPrepStatement().setInt(1, Integer.parseInt(CrimeIDText.getText()));
-                db.getPrepStatement().setString(2,NameText.getText());
+                db.getPrepStatement().setString(2,NameText.getText().toUpperCase());
                 db.getPrepStatement().setString(3,CategoryCmbBox.getSelectedItem().toString());
                 int result = db.executePrepUpdate();
                 if(result > 0)

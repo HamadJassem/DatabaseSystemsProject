@@ -271,9 +271,9 @@ public class AddPoliceStation extends javax.swing.JFrame {
             try {
                 this.db.setupPrepStatement("INSERT INTO police_station (StationID, Address, HeadID, State) values(?,?,?,?)");
                 this.db.getPrepStatement().setInt(1,Integer.parseInt(StationIDText.getText()));
-                this.db.getPrepStatement().setString(2,AddressText.getText());
+                this.db.getPrepStatement().setString(2,AddressText.getText().toUpperCase());
                 this.db.getPrepStatement().setInt(3,Integer.parseInt(HeadIDCmbBox.getSelectedItem().toString()));
-                this.db.getPrepStatement().setString(4,StateText.getText());
+                this.db.getPrepStatement().setString(4,StateText.getText().toUpperCase());
                 int result = db.executePrepUpdate();
                 if(result > 0)
                 {

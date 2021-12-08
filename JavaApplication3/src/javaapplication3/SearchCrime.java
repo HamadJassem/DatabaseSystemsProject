@@ -4,6 +4,12 @@
  */
 package javaapplication3;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+
 /**
  *
  * @author theag
@@ -13,7 +19,9 @@ public class SearchCrime extends javax.swing.JFrame {
     /**
      * Creates new form SearchCrime
      */
-    public SearchCrime() {
+    myDBCon db;
+    public SearchCrime(myDBCon db) {
+        this.db = db;
         initComponents();
     }
 
@@ -50,6 +58,12 @@ public class SearchCrime extends javax.swing.JFrame {
 
         jLabel1.setText("Name");
 
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Category");
 
         jButton6.setText("Search");
@@ -66,7 +80,7 @@ public class SearchCrime extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Infraction", "Misdemeanor", "Fellony" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Infraction", "Misdemeanor", "Felony" }));
 
         jLabel7.setText("Query Crime By Attribute");
 
@@ -120,7 +134,7 @@ public class SearchCrime extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,23 +142,30 @@ public class SearchCrime extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String SQL = "SELECT * FROM OFFICER WHERE FNAME = '" + (new String(jTextField1.getText().trim())).toUpperCase() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField1.getText().trim().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+             JOptionPane.showMessageDialog(null, "Name is empty");
         }
         else
         {
-            new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM CRIME WHERE NAME = '" + (new String(jTextField1.getText().trim())).toUpperCase() + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayCrimes(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -152,13 +173,13 @@ public class SearchCrime extends javax.swing.JFrame {
         if(jTextField6.getText().isEmpty() || jTextField6.getText().length()>4 || !Validation.isInteger(jTextField6.getText().trim()) || Integer.valueOf(jTextField6.getText())<0)
         {
             if(jTextField6.getText().isEmpty()) JOptionPane.showMessageDialog(null, "Please Type A number");
-            else if(jTextField6.getText().length()>4) JOptionPane.showMessageDialog(null, "officerid must be 4 digits");
+            else if(jTextField6.getText().length()>4) JOptionPane.showMessageDialog(null, "CRIME ID must be 4 digits");
             else if(!Validation.isInteger(jTextField6.getText().trim())) JOptionPane.showMessageDialog(null, "please type an integer");
-            else JOptionPane.showMessageDialog(null, "officerid cannot be negative");
+            else JOptionPane.showMessageDialog(null, "CRIME ID cannot be negative");
         }
         else
         {
-            String SQL = "SELECT * FROM OFFICER WHERE OFFICERID = '" + jTextField6.getText().trim() + "'";
+            String SQL = "SELECT * FROM CRIME WHERE CRIMEID = '" + jTextField6.getText().trim() + "'";
             System.out.println(SQL);
             int size = 0;
             try {
@@ -176,14 +197,14 @@ public class SearchCrime extends javax.swing.JFrame {
             }
             else
             {
-                new DisplayPoliceOfficer(db, SQL).setVisible(true);
+                new DisplayCrimes(db, SQL).setVisible(true);
             }
 
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String SQL = "SELECT * FROM OFFICER WHERE LNAME = '" + (new String(jTextField2.getText().trim())).toUpperCase() + "'";
+        String SQL = "SELECT * FROM CRIME WHERE CATEGORY = '" + (new String(jComboBox1.getSelectedItem().toString()).toUpperCase()) + "'";
         int size = 0;
         try {
             ResultSet rs = db.executeQuery(SQL);
@@ -200,44 +221,15 @@ public class SearchCrime extends javax.swing.JFrame {
         }
         else
         {
-            new DisplayPoliceOfficer(db, SQL).setVisible(true);
+            new DisplayCrimes(db, SQL).setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchCrime.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchCrime.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchCrime.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchCrime.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SearchCrime().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

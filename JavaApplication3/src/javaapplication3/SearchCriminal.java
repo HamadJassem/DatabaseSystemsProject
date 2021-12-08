@@ -257,112 +257,156 @@ public class SearchCriminal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String SQL = "SELECT * FROM CRIMINAL WHERE FNAME = '" + jTextField1.getText().trim() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField1.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            JOptionPane.showMessageDialog(null, "First Name Cannot Be Empty");        
         }
         else
         {
-            new DisplayCriminal(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM CRIMINAL WHERE FNAME = '" + jTextField1.getText().trim().toUpperCase() + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayCriminal(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String SQL = "SELECT * FROM CRIMINAL WHERE LNAME = '" + jTextField2.getText().trim() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField2.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            JOptionPane.showMessageDialog(null, "Last Name Cannot Be Empty");        
         }
         else
         {
-            new DisplayCriminal(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM CRIMINAL WHERE LNAME = '" + jTextField2.getText().trim().toUpperCase() + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayCriminal(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String SQL = "SELECT * FROM CRIMINAL WHERE AGE = '" + jTextField3.getText().trim() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField3.getText().isEmpty() || jTextField3.getText().length()>3 || !Validation.isInteger(jTextField3.getText().trim()) || Integer.valueOf(jTextField3.getText())<0)
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            if(jTextField3.getText().isEmpty()) JOptionPane.showMessageDialog(null, "Please Type A number");
+            else if(jTextField3.getText().length()>4) JOptionPane.showMessageDialog(null, "age must be 3 digits");
+            else if(!Validation.isInteger(jTextField3.getText().trim())) JOptionPane.showMessageDialog(null, "please type an integer");
+            else JOptionPane.showMessageDialog(null, "age cannot be negative");
         }
         else
         {
-            new DisplayCriminal(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM CRIMINAL WHERE AGE = '" + jTextField3.getText().trim() + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayCriminal(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String SQL = "SELECT * FROM CRIMINAL WHERE WEIGHT = '" + jTextField4.getText().trim() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField4.getText().isEmpty() || !Validation.isInteger(jTextField4.getText().trim()) || Integer.valueOf(jTextField4.getText())<0)
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            if(jTextField4.getText().isEmpty()) JOptionPane.showMessageDialog(null, "Please Type A number");
+            
+            else if(!Validation.isInteger(jTextField4.getText().trim())) JOptionPane.showMessageDialog(null, "please type an integer");
+            else JOptionPane.showMessageDialog(null, "weight cannot be negative");
         }
         else
         {
-            new DisplayCriminal(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM CRIMINAL WHERE WEIGHT = '" + jTextField4.getText().trim() + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayCriminal(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        String SQL = "SELECT * FROM CRIMINAL WHERE HEIGHT = '" + jTextField5.getText().trim() + "'";
-        int size = 0;
-        try {
-            ResultSet rs = db.executeQuery(SQL);
-
-            while (rs.next()) {
-                size++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(size == 0)
+        if(jTextField5.getText().isEmpty() || !Validation.isInteger(jTextField5.getText().trim()) || Integer.valueOf(jTextField5.getText())<0)
         {
-            JOptionPane.showMessageDialog(null, "Result set is empty");
+            if(jTextField5.getText().isEmpty()) JOptionPane.showMessageDialog(null, "Please Type A number");
+            
+            else if(!Validation.isInteger(jTextField5.getText().trim())) JOptionPane.showMessageDialog(null, "please type an integer");
+            else JOptionPane.showMessageDialog(null, "height cannot be negative");
         }
         else
         {
-            new DisplayCriminal(db, SQL).setVisible(true);
+            String SQL = "SELECT * FROM CRIMINAL WHERE HEIGHT = '" + jTextField5.getText().trim() + "'";
+            int size = 0;
+            try {
+                ResultSet rs = db.executeQuery(SQL);
+
+                while (rs.next()) {
+                    size++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchCriminal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(size == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Result set is empty");
+            }
+            else
+            {
+                new DisplayCriminal(db, SQL).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 

@@ -94,7 +94,7 @@ public class AddCriminal extends javax.swing.JFrame {
             result = false;
         }
         
-        if(HeightText.getText().trim().isEmpty() ||  HeightText.getText().length() > 7)
+        if(HeightText.getText().trim().isEmpty() ||  HeightText.getText().length() > 7 || !Validation.isInteger(HeightText.getText().trim()))
         {
             if(HeightText.getText().trim().isEmpty())
             {
@@ -104,11 +104,14 @@ public class AddCriminal extends javax.swing.JFrame {
             {
                 HeightError.setText("Invalid. Length cannot exceed 3 digits and 3 decimal points");
             }
-            
+            else if(!Validation.isInteger(HeightText.getText().trim()))
+            {
+                HeightError.setText("Invalid. Not an Integer");
+            }
             result = false;
         }
         
-        if(WeightText.getText().trim().isEmpty() || WeightText.getText().length() > 8)
+        if(WeightText.getText().trim().isEmpty() || WeightText.getText().length() > 8 || !Validation.isInteger(WeightText.getText().trim()))
         {
             if(WeightText.getText().trim().isEmpty())
             {
@@ -117,6 +120,10 @@ public class AddCriminal extends javax.swing.JFrame {
             else if(WeightText.getText().length() > 3)
             {
                 WeightError.setText("Invalid. Length cannot exceed 4 digits and 3 decimal points");
+            }
+            else if(!Validation.isInteger(WeightText.getText().trim()))
+            {
+                WeightError.setText("Invalid. Not an Integer");
             }
             
             result = false;
@@ -371,8 +378,8 @@ public class AddCriminal extends javax.swing.JFrame {
                 try {
                     this.db.setupPrepStatement("INSERT INTO criminal (criminalID, fname, lname, age, weight, height, picture) VALUES (? , ? , ?, ?, ?, ? , ?)");
                     this.db.getPrepStatement().setInt(1, Integer.parseInt(CriminalIDText.getText()));
-                    this.db.getPrepStatement().setString(2, FirstNameText.getText());
-                    this.db.getPrepStatement().setString(3, LastNameText.getText());
+                    this.db.getPrepStatement().setString(2, FirstNameText.getText().toUpperCase());
+                    this.db.getPrepStatement().setString(3, LastNameText.getText().toUpperCase());
                     this.db.getPrepStatement().setInt(4,Integer.parseInt(AgeCmbBox.getSelectedItem().toString()));
                     this.db.getPrepStatement().setInt(5,Integer.parseInt(WeightText.getText()));
                     this.db.getPrepStatement().setInt(6,Integer.parseInt(HeightText.getText()));
